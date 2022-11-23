@@ -11,10 +11,8 @@ import { refreshSourcesTreeView, refreshWorkloadsTreeView } from '../views/treeV
 export async function createGitRepositoryGenericCluster(args: CreateSourceGitGenericArgs) {
 	const parsedGitUrl = gitUrlParse(args.url);
 	if (isUrlSourceAzureDevops(parsedGitUrl.source)) {
-		// Azure devops git repo doesn't work with git implementation `go-git` and
-		// it does not support SSH key algorithm `ecdsa`
+		// Azure devops does not support SSH key algorithm `ecdsa`
 		args.sshKeyAlgorithm = 'rsa';
-		args.gitImplementation = 'libgit2';
 	}
 
 	const deployKey = await fluxTools.createSourceGit(args);

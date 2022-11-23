@@ -53,7 +53,6 @@ export const [source, setSource] = createStore({
 	privateKeyFile: '', // for git
 	keyFile: '', // for TLS
 
-	// gitImplementation: 'go-git',
 	recurseSubmodules: false,
 } as ParamsDictionary);
 
