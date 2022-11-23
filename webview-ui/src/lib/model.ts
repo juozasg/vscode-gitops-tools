@@ -83,7 +83,7 @@ function safeSetSource(name: any, val: any) {
 createEffect(() => {
 	safeSetSource('name', params.gitInfo?.name);
 	safeSetSource('gitUrl', params.gitInfo?.url);
-	safeSetSource('ref', params.gitInfo?.branch);
+	safeSetSource('gitRef', params.gitInfo?.branch);
 
 	if(params.selectedSource && params.selectedSource !== '') {
 		setSelectedSource(params.selectedSource);
