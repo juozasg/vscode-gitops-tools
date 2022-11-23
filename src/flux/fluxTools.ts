@@ -284,7 +284,7 @@ class FluxTools {
 		const dependsOnArg = dependsOn ? ` --depends-on "${dependsOn}"` : '';
 		const pruneArg = prune ? ' --prune=true' : ' --prune=false';
 
-		return `flux create kustomization ${kustomizationName}${namespaceArg}${targetNamespaceArg}${dependsOnArg} --source=${sourceRef} --path="${kustomizationPath}"${pruneArg} --timeout=10s`;
+		return `flux create kustomization ${kustomizationName}${namespaceArg}${targetNamespaceArg}${dependsOnArg} --source=${sourceRef} --path="${kustomizationPath}"${pruneArg} --timeout=5s`;
 	}
 
 

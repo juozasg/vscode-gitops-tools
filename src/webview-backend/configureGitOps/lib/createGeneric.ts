@@ -3,7 +3,7 @@ import { telemetry } from '../../../extension';
 import { CreateSourceGitGenericArgs, fluxTools } from '../../../flux/fluxTools';
 import { TelemetryEventNames } from '../../../telemetry';
 import { ParamsDictionary } from '../../../utils/typeUtils';
-import { refreshAllTreeViews, refreshSourcesTreeView } from '../../../views/treeViews';
+import { refreshAllTreeViews, refreshResourcesTreeViews } from '../../../views/treeViews';
 
 export async function createConfigurationGeneric(data: ParamsDictionary) {
 	telemetry.send(TelemetryEventNames.CreateSource, {
@@ -51,7 +51,7 @@ async function createOCIRepository(data: ParamsDictionary) {
 	};
 
 	await fluxTools.createSourceOCI(args);
-	refreshSourcesTreeView();
+	refreshResourcesTreeViews();
 }
 
 async function createKustomization(data: ParamsDictionary) {
@@ -62,4 +62,7 @@ async function createKustomization(data: ParamsDictionary) {
 	await fluxTools.createKustomization(kustomization.name, sourceRef, kustomization.path,
 		kustomization.namespace, kustomization.targetNamespace,
 		kustomization.dependsOn, kustomization.prune);
+
+	refreshResourcesTreeViews();
+
 }
