@@ -28,7 +28,6 @@ export async function getOpenedFolderGitInfo(targetFolderUri: Uri): Promise<GitI
 	let gitUrl = gitRepositoryState.url;
 	const gitBranch = gitRepositoryState.branch;
 
-	const newGitRepositorySourceName = nameGitRepositorySource(gitUrl, gitBranch);
 	const parsedGitUrl = gitUrlParse(gitUrl);
 
 	if (parsedGitUrl.protocol === 'ssh') {
@@ -36,7 +35,7 @@ export async function getOpenedFolderGitInfo(targetFolderUri: Uri): Promise<GitI
 	}
 
 	return {
-		name: newGitRepositorySourceName,
+		name: parsedGitUrl.name,
 		url: gitUrl,
 		branch: gitBranch,
 	};
