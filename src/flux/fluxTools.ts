@@ -252,13 +252,12 @@ class FluxTools {
 		const usernameArg = args.username ? ` --username "${args.username}"` : '';
 		const passwordArg = args.password ? ` --password "${args.password}"` : '';
 		const secretRefArg = args.secretRef ? ` --secret-ref "${args.secretRef}"` : '';
-		const gitImplementation = args.gitImplementation ? ` --git-implementation "${args.gitImplementation}"` : '';
 		const recurseSubmodules = args.recurseSubmodules ? ' --recurse-submodules' : '';
 		const sshKeyAlgorithm = args.sshKeyAlgorithm ? ` --ssh-key-algorithm "${args.sshKeyAlgorithm}"` : '';
 		const sshEcdsaCurve = args.sshEcdsaCurve ? ` --ssh-ecdsa-curve "${args.sshEcdsaCurve}"` : '';
 		const sshRsaBits = args.sshRsaBits ? ` --ssh-rsa-bits "${args.sshRsaBits}"` : '';
 
-		return `flux create source git ${args.sourceName}${urlArg}${branchArg}${namespaceArg}${tagArg}${semverArg}${intervalArg}${timeoutArg}${caFileArg}${privateKeyFileArg}${usernameArg}${passwordArg}${secretRefArg}${gitImplementation}${recurseSubmodules}${sshKeyAlgorithm}${sshEcdsaCurve}${sshRsaBits}`;
+		return `flux create source git ${args.sourceName}${urlArg}${branchArg}${namespaceArg}${tagArg}${semverArg}${intervalArg}${timeoutArg}${caFileArg}${privateKeyFileArg}${usernameArg}${passwordArg}${secretRefArg}${recurseSubmodules}${sshKeyAlgorithm}${sshEcdsaCurve}${sshRsaBits}`;
 	}
 
 	createSourceOCICommand(args: CreateSourceOCIGenericArgs) {
@@ -309,7 +308,6 @@ class FluxTools {
 		username?: string;
 		password?: string;
 		secretRef?: string;
-		gitImplementation?: string;
 		recurseSubmodules?: boolean;
 		sshKeyAlgorithm?: string;
 		sshEcdsaCurve?: string;

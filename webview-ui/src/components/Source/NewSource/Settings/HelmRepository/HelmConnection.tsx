@@ -18,7 +18,7 @@ function HelmConnection() {
 			<Show when={!isOCIHelm()}>
 				<div>
 					<label>Path to TLS cert file</label>
-					<input use:bindInputStore={[source, setSource, 'caFile']} class="long"></input>
+					<input use:bindInputStore={[source, setSource, 'certFile']} class="long"></input>
 				</div>
 
 				<div>
