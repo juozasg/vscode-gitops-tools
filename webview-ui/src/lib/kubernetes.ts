@@ -1,6 +1,6 @@
 // http://localhost:8001/api/v1/namespaces
 
-import { fetchJson } from '../utils/fetchJson';
+import { fetchJson } from './utils/fetchJson';
 
 
 export async function getNamespaces(): Promise<string[]> {

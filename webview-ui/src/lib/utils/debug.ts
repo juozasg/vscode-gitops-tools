@@ -1,4 +1,4 @@
-import { setParams } from '../lib/params';
+import { setParams } from '../params';
 
 export function debug(str: string) {
 	const e = document.getElementById('debug');
@@ -14,9 +14,9 @@ export function debugStandalone() {
 		'clusterInfo': {
 			'contextName': 'kind-context',
 			'clusterName': 'kind-cluster',
-			'clusterProvider': 'Azure Arc',
+			'clusterProvider': 'Generic',
 			'isClusterProviderUserOverride': false,
-			'isAzure': true,
+			'isAzure': false,
 		},
 		'gitInfo': {
 			'name': 'debug-standalone',
@@ -34,5 +34,5 @@ export function debugStandalone() {
 		for(const [param, value] of Object.entries(debugParams)) {
 			setParams(param, value);
 		}
-	}, 100);
+	}, 300);
 }

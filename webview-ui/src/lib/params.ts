@@ -1,6 +1,5 @@
-import { createEffect } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import { debug } from '../utils/debug';
+import { debug } from './utils/debug';
 
 export interface ParamsDictionary {
 	[index: string]: any;

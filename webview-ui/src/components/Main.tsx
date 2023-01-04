@@ -6,7 +6,7 @@ import Kustomization from './Kustomization';
 import Source from './Source';
 
 import { createKustomization, createSource, kustomization, selectedSource, source } from '../lib/model';
-import { vscode } from '../utils/vscode';
+import { vscode } from '../lib/utils/vscode';
 import { postModel } from '../App';
 
 

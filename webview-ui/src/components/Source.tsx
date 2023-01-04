@@ -1,10 +1,10 @@
 import { Tabs } from '@microsoft/fast-foundation';
 import { createEffect, onMount, Show } from 'solid-js';
-import { setCreateSource } from '../lib/model';
-import { params } from '../lib/params';
-import { bindChangeTabsFunc } from '../lib/bindDirectives'; bindChangeTabsFunc; // TS will elide 'unused' imports
-import NewSource from './Source/NewSource';
-import SelectSource from './Source/SelectSource';
+import { setCreateSource } from 'lib/model';
+import { params } from 'lib/params';
+import { bindChangeTabsFunc } from 'lib/bindDirectives'; bindChangeTabsFunc; // TS will elide 'unused' imports
+import NewSource from 'components/Source/NewSource';
+import SelectSource from 'components/Source/SelectSource';
 
 let tabs: Tabs;
 

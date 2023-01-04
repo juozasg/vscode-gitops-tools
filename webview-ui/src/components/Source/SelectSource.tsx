@@ -3,7 +3,7 @@ import { selectedSource, setSelectedSource } from '../../lib/model';
 import { bindChangeValueSignal } from '../../lib/bindDirectives'; bindChangeValueSignal; // TS will elide 'unused' imports
 
 import { params } from '../../lib/params';
-import { debug } from '../../utils/debug';
+import { debug } from '../../lib/utils/debug';
 
 
 createEffect(() => {

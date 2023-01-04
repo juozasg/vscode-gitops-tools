@@ -2,14 +2,14 @@ import '@vscode/codicons/dist/codicon.css';
 import '@vscode/codicons/dist/codicon.ttf';
 import { allComponents, provideVSCodeDesignSystem } from '@vscode/webview-ui-toolkit';
 import { onMount } from 'solid-js';
-import { vscode } from './utils/vscode';
+import { vscode } from 'lib/utils/vscode';
 
-import { unwrapModel } from './lib/unwrapModel';
-import { updateParams } from './lib/params';
-import { debug, debugStandalone } from './utils/debug';
+import { unwrapModel } from 'lib/unwrapModel';
+import { updateParams } from 'lib/params';
+import { debug, debugStandalone } from 'lib/utils/debug';
 
-import './App.css';
-import Main from './components/Main';
+import 'App.css';
+import Main from 'components/Main';
 
 provideVSCodeDesignSystem().register(allComponents);
 

@@ -1,11 +1,11 @@
-import { bindChangeValueFunc, bindCheckedValueFunc, bindInputStore } from '../lib/bindDirectives';
-import { createKustomization, createSource, kustomization, selectedSource, setCreateKustomization, setKustomization, source } from '../lib/model';
+import { bindChangeValueFunc, bindCheckedValueFunc, bindInputStore } from 'lib/bindDirectives';
+import { createKustomization, createSource, kustomization, selectedSource, setCreateKustomization, setKustomization, source } from 'lib/model';
 bindCheckedValueFunc; bindInputStore; bindChangeValueFunc; // TS will elide 'unused' imports
 
 
 import { Checkbox, Select } from '@microsoft/fast-foundation';
 import { For, onMount, Show } from 'solid-js';
-import { params } from '../lib/params';
+import { params } from 'lib/params';
 
 let nsDropdown: Select;
 let tnsDropdown: Select;
