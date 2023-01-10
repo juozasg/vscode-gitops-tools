@@ -1,7 +1,8 @@
 import { Checkbox } from '@microsoft/fast-foundation';
+import ListSelect from 'components/Common/ListSelect';
 import { onMount } from 'solid-js';
-import { bindCheckedValueFunc, bindChangeValueFunc } from '../../../../../lib/bindDirectives';  bindCheckedValueFunc; bindChangeValueFunc; // TS will elide 'unused' imports
-import { source, setSource } from '../../../../../lib/model';
+import { bindCheckedValueFunc } from 'lib/bindDirectives';  bindCheckedValueFunc; // TS will elide 'unused' imports
+import { source, setSource } from 'lib/model';
 
 let checkbox: Checkbox;
 
@@ -21,10 +22,10 @@ function Azure() {
 			<div style="margin-top: 1.5rem">
 				<label>Scope</label>
 				<div>
-					<vscode-dropdown use:bindChangeValueFunc={setAzureScope}>
-						<vscode-option>cluster</vscode-option>
-						<vscode-option>namespace</vscode-option>
-					</vscode-dropdown>
+					<ListSelect
+						items={() => ['branch', 'tag', 'semver']}
+						get={() => source.azureScope}
+						set={setAzureScope}/>
 				</div>
 			</div>
 		</div>

@@ -1,8 +1,9 @@
 
 
-import { bindChangeValueFunc, bindInputStore } from '../../../lib/bindDirectives';
+import ListSelect from 'components/Common/ListSelect';
+import { bindChangeValueFunc, bindInputStore } from 'lib/bindDirectives';
 bindChangeValueFunc; bindInputStore; // TS will elide 'unused' imports
-import { setSource, source } from '../../../lib/model';
+import { setSource, source } from 'lib/model';
 import SettingsPanel from './Settings/OCIRepository/Panel';
 import Name from './Source/Name';
 import Namespace from './Source/Namespace';
@@ -23,12 +24,11 @@ function OCIRepository() {
 			<div>
 				<label>Reference</label>
 				<div class="flex-row">
-					<vscode-dropdown use:bindChangeValueFunc={setRefType}>
-						<vscode-option>tag</vscode-option>
-						<vscode-option>semver</vscode-option>
-						<vscode-option>digest</vscode-option>
-					</vscode-dropdown>
-					<input use:bindInputStore={[source, setSource, 'ociRef']} style="margin-left: 4px; width: 23rem !important"></input>
+					<ListSelect
+						items={() => ['tag', 'semver', 'digest']}
+						get={() => source.ociRefType}
+						set={setRefType}/>
+					<input use:bindInputStore={[source, setSource, 'ociRef']} style="margin-left: 4px; width: 24.8rem !important"></input>
 				</div>
 			</div>
 

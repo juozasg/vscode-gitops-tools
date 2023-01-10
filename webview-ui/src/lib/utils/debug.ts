@@ -16,7 +16,7 @@ export function debugStandalone() {
 			'clusterName': 'kind-cluster',
 			'clusterProvider': 'Generic',
 			'isClusterProviderUserOverride': false,
-			'isAzure': false,
+			'isAzure': true,
 		},
 		'gitInfo': {
 			'name': 'debug-standalone',
@@ -24,10 +24,15 @@ export function debugStandalone() {
 			'branch': 'master',
 		},
 		'namespaces': [ 'default', 'flux-system', 'foobar'],
-		'sources': ['podinfo', 'podinfo2', 'podinfo11'],
-		// 'sources': [],
-		'selectSourceTab': false,
-		'selectedSource': 'podinfo2',
+		// 'sources': ['podinfo', 'podinfo2', 'podinfo11'],
+		'sources': [
+			{'name': 'podinfo', 'kind': 'GitRepository', 'namespace': 'default'},
+			{'name': 'podinfo', 'kind': 'OCIRepository', 'namespace': 'default'},
+			{'name': 'podinfo', 'kind': 'OCIRepository', 'namespace': 'flux-system'},
+			{'name': 'podinfo2', 'kind': 'GitRepository', 'namespace': 'default'},
+			{'name': 'podinfo11', 'kind': 'OCIRepository', 'namespace': 'default'}],
+		'selectSourceTab': true,
+		'selectedSource': 'GitRepository/default.podinfo2',
 	};
 
 	setTimeout(() => {

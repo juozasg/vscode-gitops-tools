@@ -1,8 +1,7 @@
-import { onMount } from 'solid-js';
-import { bindChangeValueFunc, bindInputStore } from '../../../lib/bindDirectives';
-bindChangeValueFunc; bindInputStore; // TS will elide 'unused' imports
+import ListSelect from 'components/Common/ListSelect';
+import { bindInputStore } from 'lib/bindDirectives'; bindInputStore; // TS will elide 'unused' imports
 
-import { setSource, source } from '../../../lib/model';
+import { setSource, source } from 'lib/model';
 import SettingsPanel from './Settings/GitRepository/Panel';
 import Name from './Source/Name';
 import Namespace from './Source/Namespace';
@@ -24,12 +23,11 @@ function GitRepository() {
 			<div>
 				<label>Reference</label>
 				<div class="flex-row">
-					<vscode-dropdown use:bindChangeValueFunc={setRefType}>
-						<vscode-option>branch</vscode-option>
-						<vscode-option>tag</vscode-option>
-						<vscode-option>semver</vscode-option>
-					</vscode-dropdown>
-					<input use:bindInputStore={[source, setSource, 'gitRef']} style="margin-left: 4px; width: 23rem !important"></input>
+					<ListSelect
+						items={() => ['branch', 'tag', 'semver']}
+						get={() => source.gitRefType}
+						set={setRefType}/>
+					<input use:bindInputStore={[source, setSource, 'gitRef']} style="margin-left: 4px; width: 24.8rem !important"></input>
 				</div>
 			</div>
 

@@ -1,16 +1,17 @@
 import { For, onMount } from 'solid-js';
 
-let selectElement: HTMLSelectElement;
 
 function ListSelect(props: any) {
+	let selectElement: HTMLSelectElement | undefined;
+
 	const items = props.items;
 	const get = props.get;
 	const set = props.set;
 	const classList = {medium: props.medium};
 
 	onMount(() => {
-		selectElement.addEventListener('change', (e: Event) => {
-			set(selectElement.value);
+		selectElement?.addEventListener('change', (e: Event) => {
+			set(selectElement?.value);
 		});
 	});
 

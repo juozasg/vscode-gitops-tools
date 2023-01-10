@@ -27,6 +27,17 @@ function unwrapSource() {
 }
 
 
+function unwrapKustomization() {
+	const k = unwrap(kustomization);
+
+	if(k.targetNamespace === '<unset>') {
+		k.targetNamespace = '';
+	}
+
+	return k;
+}
+
+
 export function unwrapModel() {
 	const model: ParamsDictionary = {};
 
@@ -37,7 +48,7 @@ export function unwrapModel() {
 	}
 
 	if(createKustomization()) {
-		model.kustomization = unwrap(kustomization);
+		model.kustomization = unwrapKustomization();
 	}
 
 	model.clusterInfo = unwrap(params).clusterInfo;

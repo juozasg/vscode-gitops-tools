@@ -1,8 +1,8 @@
-import { bindInputStore, bindCheckedValueFunc, bindChangeValueFunc } from '../../../../../lib/bindDirectives';  bindInputStore; bindCheckedValueFunc; bindChangeValueFunc; // TS will elide 'unused' imports
-import { source, setSource } from '../../../../../lib/model';
+import ListSelect from 'components/Common/ListSelect';
+import { bindInputStore, bindCheckedValueFunc } from 'lib/bindDirectives';  bindInputStore; bindCheckedValueFunc; // TS will elide 'unused' imports
+import { source, setSource } from 'lib/model';
 
 const setOCIProvider = (val: string) => setSource('ociProvider', val);
-
 
 function OCIConnection() {
 	return (
@@ -11,12 +11,10 @@ function OCIConnection() {
 			<div>
 				<label>OCI Provider</label>
 				<div class="flex-row">
-					<vscode-dropdown use:bindChangeValueFunc={setOCIProvider}>
-						<vscode-option>generic</vscode-option>
-						<vscode-option>aws</vscode-option>
-						<vscode-option>azure</vscode-option>
-						<vscode-option>gcp</vscode-option>
-					</vscode-dropdown>
+					<ListSelect
+						items={() => ['generic', 'aws', 'azure', 'gcp']}
+						get={() => source.ociProvider}
+						set={setOCIProvider}/>
 				</div>
 			</div>
 
