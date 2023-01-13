@@ -7,6 +7,11 @@ import { params, ParamsDictionary } from './params';
 function unwrapSource() {
 	const s = unwrap(source);
 
+	delete s['branch'];
+	delete s['tag'];
+	delete s['semver'];
+	delete s['digest'];
+
 	switch(s.kind) {
 		case 'GitRepository':
 			// Ex: s['branch'] = 'master'
@@ -22,7 +27,6 @@ function unwrapSource() {
 			delete s[key];
 		}
 	}
-
 	return s;
 }
 

@@ -2,8 +2,9 @@ import { createEffect, createSignal } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { params, ParamsDictionary } from './params';
 
-export const [createSource, setCreateSource] = createSignal(true);
+/* SOURCE */
 
+export const [createSource, setCreateSource] = createSignal(true);
 export const [selectedSource, setSelectedSource] = createSignal('');
 
 export const [source, setSource] = createStore({
@@ -12,7 +13,7 @@ export const [source, setSource] = createStore({
 	name: 'podinfo',
 	namespace: 'flux-system',
 
-	gitUrl: 'https://github.com/stefanprodan/podinfo1',
+	gitUrl: 'https://github.com/stefanprodan/podinfo',
 	helmUrl: 'https://stefanprodan.github.io/podinfo',
 	ociUrl: 'oci://ghcr.io/stefanprodan/manifests/podinfo',
 
@@ -56,8 +57,9 @@ export const [source, setSource] = createStore({
 	recurseSubmodules: false,
 } as ParamsDictionary);
 
+/* KUSTOMIZATION */
 
-export const [createKustomization, setCreateKustomization] = createSignal(true);
+export const [createKustomization, setCreateKustomization] = createSignal(false);
 
 export const [kustomization, setKustomization] = createStore({
 	name: 'podinfo',

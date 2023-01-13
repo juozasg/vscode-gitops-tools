@@ -13,7 +13,7 @@ function Namespace() {
 					items={() => params.namespaces}
 					get={() => source.namespace}
 					set={setNamespace}
-					medium={true}/>
+					class='medium'/>
 			</div>
 		</div>
 	);

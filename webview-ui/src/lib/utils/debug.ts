@@ -16,7 +16,7 @@ export function debugStandalone() {
 			'clusterName': 'kind-cluster',
 			'clusterProvider': 'Generic',
 			'isClusterProviderUserOverride': false,
-			'isAzure': true,
+			'isAzure': false,
 		},
 		'gitInfo': {
 			'name': 'debug-standalone',
@@ -31,7 +31,7 @@ export function debugStandalone() {
 			{'name': 'podinfo', 'kind': 'OCIRepository', 'namespace': 'flux-system'},
 			{'name': 'podinfo2', 'kind': 'GitRepository', 'namespace': 'default'},
 			{'name': 'podinfo11', 'kind': 'OCIRepository', 'namespace': 'default'}],
-		'selectSourceTab': true,
+		'selectSourceTab': false,
 		'selectedSource': 'GitRepository/default.podinfo2',
 	};
 

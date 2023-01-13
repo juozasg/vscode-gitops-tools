@@ -3,32 +3,28 @@ import { createKustomization, createSource, kustomization, selectedSource, setCr
 bindCheckedValueFunc; bindInputStore; bindChangeValueFunc; // TS will elide 'unused' imports
 
 
-import { Checkbox, Select } from '@microsoft/fast-foundation';
+import { Checkbox as FC } from '@microsoft/fast-foundation';
 import { For, onMount, Show } from 'solid-js';
 import { params } from 'lib/params';
 import ListSelect from './Common/ListSelect';
+import Checkbox from './Common/Checkbox';
 
 
-let createKustomizationCheckbox: Checkbox;
+let createKustomizationCheckbox: FC;
 
 const setNamespace = (val: string) => setKustomization('namespace', val);
-
-const setTargetNamespace = (val: string) => {
-	setKustomization('targetNamespace', val);
-};
+const setTargetNamespace = (val: string) =>	setKustomization('targetNamespace', val);
 
 function Kustomization() {
-	onMount(() => console.log(kustomization));
-
 	const repositoryName = () => createSource() ? source.name : selectedSource();
 
 	const isAzure = () => params.clusterInfo?.isAzure && (!createSource() || source.createFluxConfig);
 
-	onMount(() => {
-		if(createKustomizationCheckbox) {
-			createKustomizationCheckbox.checked = createKustomization();
-		}
-	});
+	// onMount(() => {
+	// 	if(createKustomizationCheckbox) {
+	// 		createKustomizationCheckbox.checked = createKustomization();
+	// 	}
+	// });
 
 	const targetNamespaces = () => [...(params.namespaces?.values() || []), '<unset>'];
 
@@ -37,15 +33,19 @@ function Kustomization() {
 			<h2>Create Kustomization <a href="https://fluxcd.io/flux/components/kustomize/kustomization/"><span class="codicon codicon-question"></span></a></h2>
 			<div style="margin-top: 1rem; margin-bottom: 2rem">
 				<Show when={createSource()}>
-					<vscode-checkbox ref={createKustomizationCheckbox} use:bindCheckedValueFunc={setCreateKustomization}>
-					Create a <code>Kustomization</code>
-					</vscode-checkbox>
+					{/* <vscode-checkbox ref={createKustomizationCheckbox} use:bindCheckedValueFunc={setCreateKustomization}>
+						Create a <code>Kustomization</code>
+					</vscode-checkbox> */}
+
+					<Checkbox get={createKustomization} set={setCreateKustomization}>
+						Create a <code>Kustomization</code>
+					</Checkbox>
 				</Show>
 			</div>
 			<Show when={createKustomization()}>
 				<div>
 					<label><code>Kustomization</code> Name</label>
-					<input use:bindInputStore={[kustomization, setKustomization, 'name']}></input>
+					<input use:bindInputStore={[kustomization, setKustomization, 'name']} class="medium"></input>
 				</div>
 				<Show when={!isAzure()}>
 					<div>
@@ -55,7 +55,7 @@ function Kustomization() {
 								items={() => params.namespaces}
 								get={() => kustomization.namespace}
 								set={setNamespace}
-								medium={true}/>
+								class='medium'/>
 						</div>
 
 					</div>
@@ -72,7 +72,7 @@ function Kustomization() {
 								items={targetNamespaces}
 								get={() => kustomization.targetNamespace}
 								set={setTargetNamespace}
-								medium={true}/>
+								class={'medium'}/>
 							<div style="margin-top: -1rem"><i>Namespace for objects reconciled by the <code>Kustomization</code></i></div>
 						</div>
 					</div>
@@ -84,7 +84,7 @@ function Kustomization() {
 
 				<div >
 					<vscode-checkbox checked use:bindCheckedValueFunc={(checked: boolean) => setKustomization('prune', checked)}>
-            Prune (remove stale resources)
+						Prune (remove stale resources)
 					</vscode-checkbox>
 				</div>
 

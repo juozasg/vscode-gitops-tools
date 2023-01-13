@@ -5,9 +5,9 @@ import { For, Show } from 'solid-js';
 import Kustomization from './Kustomization';
 import Source from './Source';
 
-import { createKustomization, createSource, kustomization, selectedSource, source } from '../lib/model';
-import { vscode } from '../lib/utils/vscode';
-import { postModel } from '../App';
+import { createKustomization, createSource, kustomization, selectedSource, source } from 'lib/model';
+import { vscode } from 'lib/utils/vscode';
+import { postModel } from 'App';
 
 
 

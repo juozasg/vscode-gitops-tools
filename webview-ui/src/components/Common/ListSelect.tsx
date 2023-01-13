@@ -1,22 +1,21 @@
 import { For, onMount } from 'solid-js';
 
-
 function ListSelect(props: any) {
-	let selectElement: HTMLSelectElement | undefined;
+	// use <select> instead of <vscode-dropdown> because of <vscode-dropdown> initial value bugs
+	let selectElement!: HTMLSelectElement;
 
 	const items = props.items;
 	const get = props.get;
 	const set = props.set;
-	const classList = {medium: props.medium};
 
 	onMount(() => {
-		selectElement?.addEventListener('change', (e: Event) => {
-			set(selectElement?.value);
+		selectElement.addEventListener('change', (e: Event) => {
+			set(selectElement.value);
 		});
 	});
 
 	return (
-		<select ref={selectElement} classList={classList}>
+		<select ref={selectElement} class={props.class}>
 			<For each={items()}>{(name: string) =>
 				<option selected={name === get()}>{name}</option>
 			}
