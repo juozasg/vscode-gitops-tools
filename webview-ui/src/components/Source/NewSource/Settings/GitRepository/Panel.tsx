@@ -1,9 +1,10 @@
 import { createSignal, Show } from 'solid-js';
 import { Collapse } from 'solid-collapse';
-import SettingsIntervals from '../Intervals';
+
 import Connection from './GitConnection';
 import Azure from './Azure';
-import { params } from '../../../../../lib/params';
+import { params } from 'lib/params';
+import SettingsIntervals from '../Intervals';
 
 function Panel() {
 	const [isOpen, setIsOpen] = createSignal(false);

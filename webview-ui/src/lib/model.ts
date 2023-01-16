@@ -71,7 +71,34 @@ export const [kustomization, setKustomization] = createStore({
 });
 
 
+export function getStore(storeName: string, variable: string) {
+	const store = (storeName === 'source') ? source : kustomization;
+	return () => store[variable];
+}
 
+export function setStore(storeName: string, variable: any) {
+	const setter = (storeName === 'source') ? setSource : setKustomization;
+	return (val: any) => setter(variable, val);
+}
+
+export function storeAccessors(props: any) {
+	let get: ()=> any;
+	let set: (v: any)=> any;
+
+	get = props.get || (() => undefined);
+	set = props.set || ((_: any) => undefined);
+
+	if(props.store && props.field) {
+		get = getStore(props.store, props.field);
+		set = setStore(props.store, props.field);
+	}
+
+	return {get, set};
+}
+
+
+
+// window['g'] = getA;
 // window['source'] = source;
 
 

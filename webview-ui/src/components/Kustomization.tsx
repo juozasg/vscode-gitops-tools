@@ -1,16 +1,10 @@
-import { bindChangeValueFunc, bindCheckedValueFunc, bindInputStore } from 'lib/bindDirectives';
+import { Show } from 'solid-js';
+
 import { createKustomization, createSource, kustomization, selectedSource, setCreateKustomization, setKustomization, source } from 'lib/model';
-bindCheckedValueFunc; bindInputStore; bindChangeValueFunc; // TS will elide 'unused' imports
-
-
-import { Checkbox as FC } from '@microsoft/fast-foundation';
-import { For, onMount, Show } from 'solid-js';
 import { params } from 'lib/params';
-import ListSelect from './Common/ListSelect';
-import Checkbox from './Common/Checkbox';
+import ListSelect from 'components/Common/ListSelect';
+import Checkbox from 'components/Common/Checkbox';
 
-
-let createKustomizationCheckbox: FC;
 
 const setNamespace = (val: string) => setKustomization('namespace', val);
 const setTargetNamespace = (val: string) =>	setKustomization('targetNamespace', val);
@@ -20,12 +14,6 @@ function Kustomization() {
 
 	const isAzure = () => params.clusterInfo?.isAzure && (!createSource() || source.createFluxConfig);
 
-	// onMount(() => {
-	// 	if(createKustomizationCheckbox) {
-	// 		createKustomizationCheckbox.checked = createKustomization();
-	// 	}
-	// });
-
 	const targetNamespaces = () => [...(params.namespaces?.values() || []), '<unset>'];
 
 	return(
@@ -33,10 +21,6 @@ function Kustomization() {
 			<h2>Create Kustomization <a href="https://fluxcd.io/flux/components/kustomize/kustomization/"><span class="codicon codicon-question"></span></a></h2>
 			<div style="margin-top: 1rem; margin-bottom: 2rem">
 				<Show when={createSource()}>
-					{/* <vscode-checkbox ref={createKustomizationCheckbox} use:bindCheckedValueFunc={setCreateKustomization}>
-						Create a <code>Kustomization</code>
-					</vscode-checkbox> */}
-
 					<Checkbox get={createKustomization} set={setCreateKustomization}>
 						Create a <code>Kustomization</code>
 					</Checkbox>

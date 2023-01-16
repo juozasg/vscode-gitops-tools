@@ -1,11 +1,11 @@
 import { createEffect, onMount } from 'solid-js';
 import { Checkbox as FastCheckbox} from '@microsoft/fast-foundation';
+import { storeAccessors } from 'lib/model';
 
 function Checkbox(props: any) {
-	let checkboxElement!: FastCheckbox;
+	let checkboxElement: FastCheckbox;
 
-	const get = props.get;
-	const set = props.set;
+	const {get, set} = storeAccessors(props);
 
 	onMount(() => {
 		createEffect(() => checkboxElement.checked = get());
@@ -16,7 +16,7 @@ function Checkbox(props: any) {
 	});
 
 	return (
-		<vscode-checkbox ref={checkboxElement}>
+		<vscode-checkbox ref={checkboxElement!} style={props.style}>
 			{props.children}
 		</vscode-checkbox>
 	);

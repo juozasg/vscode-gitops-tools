@@ -1,8 +1,5 @@
 import  ListSelect from 'components/Common/ListSelect';
-import { setSource, source } from 'lib/model';
 import { params } from 'lib/params';
-
-const setNamespace = (val: string) => setSource('namespace', val);
 
 function Namespace() {
 	return (
@@ -11,9 +8,8 @@ function Namespace() {
 			<div>
 				<ListSelect
 					items={() => params.namespaces}
-					get={() => source.namespace}
-					set={setNamespace}
-					class='medium'/>
+					store="source" field="namespace"
+					class="medium"/>
 			</div>
 		</div>
 	);

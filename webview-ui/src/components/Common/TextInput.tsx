@@ -1,10 +1,10 @@
+import { getStore, setSource, setStore, storeAccessors } from 'lib/model';
 import { createEffect, onMount } from 'solid-js';
 
 function TextInput(props: any) {
-	let inputElement!: HTMLInputElement;
+	let inputElement: HTMLInputElement;
 
-	const get = props.get;
-	const set = props.set;
+	const {get, set} = storeAccessors(props);
 
 	onMount(() => {
 		createEffect(() => inputElement.value = get());
@@ -13,7 +13,7 @@ function TextInput(props: any) {
 	});
 
 	return (
-		<input ref={inputElement} class={props.class}></input>
+		<input ref={inputElement!} class={props.class} style={props.style} type={props.type}></input>
 	);
 }
 
