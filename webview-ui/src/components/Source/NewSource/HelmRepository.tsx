@@ -1,9 +1,8 @@
-import { bindChangeValueFunc, bindInputStore } from '../../../lib/bindDirectives';
-bindChangeValueFunc; bindInputStore; // TS will elide 'unused' imports
 
-import { source, setSource } from '../../../lib/model';
-import Name from './Source/Name';
-import Namespace from './Source/Namespace';
+import TextInput from 'components/Common/TextInput';
+import { source } from '../../../lib/model';
+import Name from './Common/Name';
+import Namespace from './Common/Namespace';
 
 import SettingsPanel from './Settings/HelmRepository/Panel';
 
@@ -16,7 +15,7 @@ function HelmRepository() {
 			<Namespace/>
 			<div>
 				<label>Repository URL</label>
-				<input use:bindInputStore={[source, setSource, 'helmUrl']} class="long"></input>
+				<TextInput store="source" field="helmUrl" class="long"/>
 			</div>
 			<SettingsPanel/>
 		</div>

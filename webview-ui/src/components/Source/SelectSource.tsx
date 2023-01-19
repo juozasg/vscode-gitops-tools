@@ -10,7 +10,7 @@ createEffect(() => {
 	debug(`selectedSource()=${selectedSource()}`);
 });
 
-const namespacedSources = () => params.sources.map((s: any) => `${s.kind}/${s.namespace}.${s.name}`).sort();
+const namespacedSources = () => params.sources.map((s: any) => `${s.kind}/${s.name}.${s.namespace}`).sort();
 
 function SelectSource() {
 	return (

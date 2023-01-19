@@ -1,5 +1,5 @@
-import Name from './Source/Name';
-import Namespace from './Source/Namespace';
+import Name from './Common/Name';
+import Namespace from './Common/Namespace';
 
 function Bucket() {
 	return (

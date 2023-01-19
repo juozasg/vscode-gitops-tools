@@ -1,5 +1,5 @@
 import ListSelect from 'components/Common/ListSelect';
-import { bindInputStore, bindCheckedValueFunc } from 'lib/bindDirectives';  bindInputStore; bindCheckedValueFunc; // TS will elide 'unused' imports
+import TextInput from 'components/Common/TextInput';
 import { source, setSource } from 'lib/model';
 
 const setOCIProvider = (val: string) => setSource('ociProvider', val);
@@ -12,20 +12,19 @@ function OCIConnection() {
 				<label>OCI Provider</label>
 				<div class="flex-row">
 					<ListSelect
-						items={() => ['generic', 'aws', 'azure', 'gcp']}
-						get={() => source.ociProvider}
-						set={setOCIProvider}/>
+						store="source" field="ociProvider"
+						items={() => ['generic', 'aws', 'azure', 'gcp']}/>
 				</div>
 			</div>
 
 			<div>
 				<label><code>Secret</code> with authentication credentials for the repository <a href="https://fluxcd.io/flux/components/source/ocirepositories/#secret-reference"><span class="codicon codicon-question"></span></a></label>
-				<input use:bindInputStore={[source, setSource, 'secretRef']} class="long"></input>
+				<TextInput store="source" field="secretRef" class="long"/>
 			</div>
 
 			<div>
 				<label><code>ServiceAccount</code> with image pull secrets for authentication</label>
-				<input use:bindInputStore={[source, setSource, 'serviceAccount']} class="long"></input>
+				<TextInput store="source" field="serviceAccount" class="long"/>
 			</div>
 
 		</div>

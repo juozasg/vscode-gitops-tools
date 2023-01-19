@@ -1,20 +1,20 @@
-import { bindInputStore, bindCheckedValueFunc, bindChangeValueFunc } from '../../../../../lib/bindDirectives';
-bindInputStore; bindCheckedValueFunc; bindChangeValueFunc; // TS will elide 'unused' imports
-import { source, setSource } from '../../../../../lib/model';
+import Checkbox from 'components/Common/Checkbox';
+import TextInput from 'components/Common/TextInput';
+import { source } from 'lib/model';
 
 
 function OCITLS() {
 	return (
 		<div>
 			<div style="margin-bottom: 1rem">
-				<vscode-checkbox use:bindCheckedValueFunc={(checked: boolean) => setSource('insecure', checked)}>
+				<Checkbox store="source" field="insecure">
             Allow insecure (non-TLS) connection to the registry
-				</vscode-checkbox>
+				</Checkbox>
 			</div>
 
 			<div>
 				<label><code>Secret</code> used for TLS certificates <a href="https://fluxcd.io/flux/components/source/ocirepositories/#tls-certificates"><span class="codicon codicon-question"></span></a></label>
-				<input use:bindInputStore={[source, setSource, 'certRef']} class="long"></input>
+				<TextInput store="source" field="certRef" class="long"/>
 			</div>
 		</div>
 	);

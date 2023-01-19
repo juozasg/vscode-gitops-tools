@@ -2,8 +2,8 @@ import ListSelect from 'components/Common/ListSelect';
 import TextInput from 'components/Common/TextInput';
 
 import SettingsPanel from './Settings/GitRepository/Panel';
-import Name from './Source/Name';
-import Namespace from './Source/Namespace';
+import Name from './Common/Name';
+import Namespace from './Common/Namespace';
 
 function GitRepository() {
 	return (
@@ -20,8 +20,8 @@ function GitRepository() {
 				<label>Reference</label>
 				<div class="flex-row">
 					<ListSelect
-						items={() => ['branch', 'tag', 'semver']}
-						store="source" field="gitRefType"/>
+						store="source" field="gitRefType"
+						items={() => ['branch', 'tag', 'semver']}/>
 					<TextInput store="source" field="gitRef" style="margin-left: 4px; width: 24.8rem !important"/>
 				</div>
 			</div>

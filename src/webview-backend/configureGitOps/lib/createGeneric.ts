@@ -58,11 +58,10 @@ async function createKustomization(data: ParamsDictionary) {
 	const source = data.source;
 	const kustomization = data.kustomization;
 
-	let sourceRef = source ? `${source.kind}/${source.name}` : data.selectedSource;
+	let sourceRef = source ? `${source.kind}/${source.name}.${source.namespace}` : data.selectedSource;
 	await fluxTools.createKustomization(kustomization.name, sourceRef, kustomization.path,
 		kustomization.namespace, kustomization.targetNamespace,
 		kustomization.dependsOn, kustomization.prune);
 
 	refreshResourcesTreeViews();
-
 }

@@ -1,12 +1,9 @@
-
-
 import ListSelect from 'components/Common/ListSelect';
-import { bindChangeValueFunc, bindInputStore } from 'lib/bindDirectives';
-bindChangeValueFunc; bindInputStore; // TS will elide 'unused' imports
 import { setSource, source } from 'lib/model';
 import SettingsPanel from './Settings/OCIRepository/Panel';
-import Name from './Source/Name';
-import Namespace from './Source/Namespace';
+import Name from './Common/Name';
+import Namespace from './Common/Namespace';
+import TextInput from 'components/Common/TextInput';
 
 
 const setRefType = (val: string) => setSource('ociRefType', val);
@@ -18,17 +15,16 @@ function OCIRepository() {
 			<Namespace/>
 			<div>
 				<label>Repository URL</label>
-				<input use:bindInputStore={[source, setSource, 'ociUrl']} class="long"></input>
+				<TextInput store="source" field="ociUrl" class="long"/>
 			</div>
 
 			<div>
 				<label>Reference</label>
 				<div class="flex-row">
 					<ListSelect
-						items={() => ['tag', 'semver', 'digest']}
-						get={() => source.ociRefType}
-						set={setRefType}/>
-					<input use:bindInputStore={[source, setSource, 'ociRef']} style="margin-left: 4px; width: 24.8rem !important"></input>
+						store="source" field="ociRefType"
+						items={() => ['tag', 'semver', 'digest']}/>
+					<TextInput store="source" field="ociRef" style="margin-left: 4px; width: 24.8rem !important"/>
 				</div>
 			</div>
 

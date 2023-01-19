@@ -7,8 +7,8 @@ function Namespace() {
 			<label>Namespace</label>
 			<div>
 				<ListSelect
-					items={() => params.namespaces}
 					store="source" field="namespace"
+					items={() => params.namespaces}
 					class="medium"/>
 			</div>
 		</div>
