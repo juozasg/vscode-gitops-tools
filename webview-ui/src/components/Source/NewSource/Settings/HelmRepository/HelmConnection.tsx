@@ -8,7 +8,6 @@ import Checkbox from 'components/Common/Checkbox';
 function HelmConnection() {
 	return (
 		<div>
-
 			<div>
 				<label><code>Secret</code> with authentication credentials (TLS, basic auth or docker-secret) <a href="https://fluxcd.io/flux/components/source/helmrepositories/#secret-reference"><span class="codicon codicon-question"></span></a></label>
 				<TextInput store="source" field="secretRef" class="long"/>
@@ -29,15 +28,16 @@ function HelmConnection() {
 					<label>Path to TLS CA cert file </label>
 					<TextInput store="source" field="caFile" class="long"/>
 				</div>
+
 				<div>
 					<label>Basic authentication username</label>
 					<TextInput store="source" field="username" class="medium"/>
 				</div>
+
 				<div>
 					<label>Basic authentication password</label>
 					<TextInput store="source" field="password" type="password" class="medium"/>
 				</div>
-
 
 				<div style="margin-bottom: 1rem">
 					<Checkbox store="source" field="helmPassCredentials">

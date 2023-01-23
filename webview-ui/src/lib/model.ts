@@ -17,11 +17,14 @@ export const [source, setSource] = createStore({
 	helmUrl: 'https://stefanprodan.github.io/podinfo',
 	ociUrl: 'oci://ghcr.io/stefanprodan/manifests/podinfo',
 
-	bucketEndpoint: 'minio.minio.svc.cluster.local:9000',
+	// bucketEndpoint: 'minio.minio.svc.cluster.local:9000',
+	bucketEndpoint: '',
 	bucketName: 'podinfo',
+	bucketRegion: '',
+	bucketProvider: 'generic',
+	bucketSecretRef: '',
 	bucketAccessKey: '',
 	bucketSecretKey: '',
-	bucketSecretRef: '',
 
 	gitRef: 'master',
 	gitRefType: 'branch',
@@ -48,11 +51,12 @@ export const [source, setSource] = createStore({
 	password: '',
 	secretRef: '',
 	serviceAccount: '',
-	caFile: '',
+	keyFile: '', // for TLS
 	certFile: '',
+	caFile: '',
 	certRef: '', // OCI
 	privateKeyFile: '', // for git
-	keyFile: '', // for TLS
+
 
 	recurseSubmodules: false,
 } as ParamsDictionary);

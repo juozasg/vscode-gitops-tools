@@ -114,12 +114,9 @@ function missingFields() {
 			if(!(source.bucketEndpoint?.length > 0)) {
 				fields.push('Bucket endpoint');
 			}
-			if(source.bucketInsecure) {
-				if(!(source.bucketAccessKey?.length > 0)) {
-					fields.push('Bucket Access Key');
-				}
-				if(!(source.bucketSecretKey?.length > 0) || !(source.bucketSecretRef?.length > 0)) {
-					fields.push('Bucket Secret Key or Secret Ref');
+			if(!source.bucketInsecure) {
+				if(source.bucketSecretRef.length === 0 && (source.bucketAccessKey.length === 0 || source.bucketSecretKey.length === 0)) {
+					fields.push('Bucket Secret Ref or Access and Secret keys');
 				}
 			}
 			break;

@@ -2,8 +2,6 @@ import ListSelect from 'components/Common/ListSelect';
 import TextInput from 'components/Common/TextInput';
 import { source, setSource } from 'lib/model';
 
-const setOCIProvider = (val: string) => setSource('ociProvider', val);
-
 function OCIConnection() {
 	return (
 		<div>

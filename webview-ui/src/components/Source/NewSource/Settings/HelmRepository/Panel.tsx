@@ -22,7 +22,6 @@ function Panel() {
 						<vscode-panel-view >
 							<Connection/>
 						</vscode-panel-view>
-
 					</vscode-panels>
 				</div>
 			</Collapse>

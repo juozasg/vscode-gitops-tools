@@ -33,7 +33,6 @@ function Source() {
 					<vscode-panel-tab id="select-source-tab">Select Source</vscode-panel-tab>
 				</Show>
 
-
 				<vscode-panel-view>
 					<NewSource/>
 				</vscode-panel-view>
