@@ -12,6 +12,10 @@ function unwrapSource() {
 	delete s['semver'];
 	delete s['digest'];
 
+	if(s.createSecret) {
+		delete s['secretRef'];
+	}
+
 	switch(s.kind) {
 		case 'GitRepository':
 			// Ex: s['branch'] = 'master'

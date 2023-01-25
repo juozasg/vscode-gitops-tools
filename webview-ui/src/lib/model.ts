@@ -45,11 +45,12 @@ export const [source, setSource] = createStore({
 	azureScope: 'cluster',
 
 	// connection settings
+	createSecret: true, // secretRef overrides other command authentication flags.
+	secretRef: '', // this secret contains appropriate credentials for selected source type
 	insecure: false, // non TLS HTTP for Bucket or OCI
 	passCredentials: false, // HelmRepository
 	username: '',
 	password: '',
-	secretRef: '',
 	serviceAccount: '',
 	keyFile: '', // for TLS
 	certFile: '',
@@ -60,6 +61,7 @@ export const [source, setSource] = createStore({
 
 	recurseSubmodules: false,
 } as ParamsDictionary);
+
 
 /* KUSTOMIZATION */
 

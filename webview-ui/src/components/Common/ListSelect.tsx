@@ -10,8 +10,16 @@ function ListSelect(props: any) {
 
 	onMount(() => {
 		selectElement.addEventListener('change', (e: Event) => {
+			const old = get();
 			set(selectElement.value);
+			if(props.changed) {
+				props.changed(old, selectElement.value);
+			}
 		});
+
+		if(props.changed) {
+			props.changed(selectElement.value, selectElement.value);
+		}
 	});
 
 	return (

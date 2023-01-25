@@ -1,7 +1,7 @@
 import Checkbox from 'components/Common/Checkbox';
 import ListSelect from 'components/Common/ListSelect';
 import TextInput from 'components/Common/TextInput';
-import { source } from 'lib/model';
+import { setSource, source } from 'lib/model';
 import { createSignal, Show } from 'solid-js';
 
 
@@ -24,14 +24,8 @@ function AzureSettings() {
 	);
 }
 
-const [createSecret, setCreateSecret] = createSignal(true);
+// const [createSecret, setCreateSecret] = createSignal(false);
 
-
-const dbset = (val: any) => {
-	console.log(val);
-	setCreateSecret(val);
-	console.log(createSecret);
-};
 
 function SecretCredentials() {
 	const createSecretJsx = (
@@ -50,16 +44,14 @@ function SecretCredentials() {
 
 	const useSecretRefJsx = (
 		<div>
-			<label><code>Secret</code> with <code>accesskey</code> and <code>secretkey</code> credentials&nbsp
-				<a href="https://fluxcd.io/flux/components/source/buckets/#secret-reference">
-					<span class="codicon codicon-question"></span></a>
+			<label><code>Secret</code> with <code>accesskey</code> and <code>secretkey</code> credentials
 			</label>
 			<TextInput store="source" field="secretRef" class="long"/>
 		</div>
 	);
 
 	return (
-		<Show when={createSecret()} fallback={useSecretRefJsx}>
+		<Show when={source.createSecret} fallback={useSecretRefJsx}>
 			{createSecretJsx}
 		</Show>
 	);
@@ -80,7 +72,10 @@ function BucketPoviderSettings() {
 				<TextInput store="source" field="bucketRegion" class="medium"/>
 			</div>
 
-			<Checkbox get={createSecret} set={dbset} style="margin-bottom: 1rem">Create <code>Secret</code></Checkbox>
+			<Checkbox store="source" field="createSecret" style="margin-bottom: 1rem">Create new <code>Secret</code> with credentials&nbsp
+				<a href="https://fluxcd.io/flux/components/source/buckets/#secret-reference">
+					<span class="codicon codicon-question"></span></a>
+			</Checkbox>
 
 			<SecretCredentials/>
 		</Show>
@@ -88,17 +83,22 @@ function BucketPoviderSettings() {
 
 }
 
+const providerChanged = (oldValue: any, newValue: any) => {
+	if(newValue === 'azure') {
+		setSource('createSecret', false);
+	}
+};
 
 function BucketConnection() {
 	return (
 		<div>
-
 
 			<div>
 				<label>Bucket Provider</label>
 				<div class="flex-row">
 					<ListSelect
 						store="source" field="bucketProvider"
+						changed={providerChanged}
 						items={() => ['generic', 'aws', 'azure', 'gcp']}/>
 				</div>
 			</div>
