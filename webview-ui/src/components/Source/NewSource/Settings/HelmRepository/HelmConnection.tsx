@@ -4,13 +4,15 @@ import TextInput from 'components/Common/TextInput';
 import { isOCIHelm } from '../../HelmRepository';
 import Checkbox from 'components/Common/Checkbox';
 import { source } from 'lib/model';
+import { ToolkitHelpLink } from 'components/Common/HelpLink';
 
 
 
 function SecretRefInput() {
 	return (
 		<div>
-			<label><code>Secret</code> with authentication credentials (TLS, basic auth or docker-secret) <a href="https://fluxcd.io/flux/components/source/helmrepositories/#secret-reference"><span class="codicon codicon-question"></span></a></label>
+			<label><code>Secret</code> with authentication credentials (TLS, basic auth or docker-secret) </label> <ToolkitHelpLink href="source/helmrepositories/#secret-reference"/>
+
 			<TextInput store="source" field="secretRef" class="long"/>
 		</div>
 	);
@@ -21,10 +23,9 @@ function HelmConnection() {
 	return (
 		<div>
 
-			<Checkbox store="source" field="createSecret" style="margin-bottom: 1rem">Create new <code>Secret</code> with credentials&nbsp
-				<a href="https://fluxcd.io/flux/components/source/helmrepositories/#secret-reference">
-					<span class="codicon codicon-question"></span></a>
+			<Checkbox store="source" field="createSecret" style="margin-bottom: 1rem">Create new <code>Secret</code> with credentials
 			</Checkbox>
+			<ToolkitHelpLink href="source/helmrepositories/#secret-reference"/>
 
 			<Show when={source.createSecret} fallback={SecretRefInput}>
 				<div>

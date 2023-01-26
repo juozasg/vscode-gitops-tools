@@ -1,4 +1,5 @@
 import { Tabs } from '@microsoft/fast-foundation';
+import { ToolkitHelpLink } from 'components/Common/HelpLink';
 import { onMount } from 'solid-js';
 import { setSource, source } from '../../lib/model';
 
@@ -24,31 +25,19 @@ function NewSource() {
 			<vscode-panels ref={tabs} activeid={`${source.kind}-tab`} aria-label="Type of source">
 
 				<vscode-panel-tab id="GitRepository-tab">
-					GitRepository&nbsp;
-					<a href="https://fluxcd.io/flux/components/source/gitrepositories/">
-						<span class="codicon codicon-question"></span>
-					</a>
+					GitRepository <ToolkitHelpLink href="source/gitrepositories/" />
 				</vscode-panel-tab>
 
 				<vscode-panel-tab id="HelmRepository-tab">
-					HelmRepository&nbsp;
-					<a href="https://fluxcd.io/flux/components/source/helmrepositories/">
-						<span class="codicon codicon-question"></span>
-					</a>
+					HelmRepository <ToolkitHelpLink href="source/helmrepositories/"/>
 				</vscode-panel-tab>
 
 				<vscode-panel-tab id="OCIRepository-tab">
-					OCIRepository&nbsp;
-					<a href="https://fluxcd.io/flux/components/source/ocirepositories/">
-						<span class="codicon codicon-question"></span>
-					</a>
+					OCIRepository <ToolkitHelpLink href="source/ocirepositories/"/>
 				</vscode-panel-tab>
 
 			 	<vscode-panel-tab id="Bucket-tab">
-					Bucket&nbsp;
-					<a href="https://fluxcd.io/flux/components/source/buckets/">
-						<span class="codicon codicon-question"></span>
-					</a>
+					Bucket <ToolkitHelpLink href="source/buckets/"/>
 				</vscode-panel-tab>
 
 				<vscode-panel-view>

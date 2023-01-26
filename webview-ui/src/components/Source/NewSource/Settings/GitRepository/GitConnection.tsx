@@ -1,4 +1,5 @@
 import Checkbox from 'components/Common/Checkbox';
+import { ToolkitHelpLink } from 'components/Common/HelpLink';
 import TextInput from 'components/Common/TextInput';
 import { source } from 'lib/model';
 import { Show } from 'solid-js';
@@ -29,11 +30,8 @@ function SSHPrivateKeyFile() {
 function GitConnection() {
 	return (
 		<div>
-
-			<Checkbox store="source" field="createSecret" style="margin-bottom: 1rem">Create new <code>Secret</code> with credentials&nbsp
-				<a href="https://fluxcd.io/flux/components/source/gitrepositories/#secret-reference">
-					<span class="codicon codicon-question"></span></a>
-			</Checkbox>
+			<Checkbox store="source" field="createSecret" style="margin-bottom: 1rem">Create new <code>Secret</code> with credentials</Checkbox>
+			<ToolkitHelpLink href="source/gitrepositories/#secret-reference"/>
 
 			<Show when={source.createSecret} fallback={SecretRefInput}>
 				<Show when={!isSSH()} fallback={SSHPrivateKeyFile}>

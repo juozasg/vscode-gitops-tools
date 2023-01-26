@@ -5,6 +5,7 @@ import { params } from 'lib/params';
 import ListSelect from 'components/Common/ListSelect';
 import Checkbox from 'components/Common/Checkbox';
 import TextInput from './Common/TextInput';
+import { ToolkitHelpLink } from './Common/HelpLink';
 
 function Kustomization() {
 	const repositoryName = () => createSource() ? source.name : selectedSource();
@@ -15,7 +16,7 @@ function Kustomization() {
 
 	return(
 		<div>
-			<h2>Create Kustomization <a href="https://fluxcd.io/flux/components/kustomize/kustomization/"><span class="codicon codicon-question"></span></a></h2>
+			<h2>Create Kustomization <ToolkitHelpLink href="kustomize/kustomization/"/></h2>
 			<div style="margin-top: 1rem; margin-bottom: 2rem">
 				<Show when={createSource()}>
 					<Checkbox get={createKustomization} set={setCreateKustomization}>

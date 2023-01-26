@@ -1,4 +1,5 @@
 import Checkbox from 'components/Common/Checkbox';
+import { ToolkitHelpLink } from 'components/Common/HelpLink';
 import ListSelect from 'components/Common/ListSelect';
 import TextInput from 'components/Common/TextInput';
 import { setSource, source } from 'lib/model';
@@ -14,9 +15,7 @@ function AzureSettings() {
 			</div>
 
 			<div>
-				<label><code>Secret</code> with Azure credentials&nbsp;
-					<a href="https://fluxcd.io/flux/components/source/buckets/#azure">
-						<span class="codicon codicon-question"></span></a>
+				<label><code>Secret</code> with Azure credentials <ToolkitHelpLink href="source/buckets/#azure"/>
 				</label>
 				<TextInput store="source" field="secretRef" class="long"/>
 			</div>
@@ -41,6 +40,7 @@ function SecretCredentials() {
 			</div>
 		</>
 	);
+
 
 	const useSecretRefJsx = (
 		<div>
@@ -72,10 +72,8 @@ function BucketPoviderSettings() {
 				<TextInput store="source" field="bucketRegion" class="medium"/>
 			</div>
 
-			<Checkbox store="source" field="createSecret" style="margin-bottom: 1rem">Create new <code>Secret</code> with credentials&nbsp
-				<a href="https://fluxcd.io/flux/components/source/buckets/#secret-reference">
-					<span class="codicon codicon-question"></span></a>
-			</Checkbox>
+			<Checkbox store="source" field="createSecret" style="margin-bottom: 1rem">Create new <code>Secret</code> with credential</Checkbox>
+			<ToolkitHelpLink href="source/buckets/#secret-reference"/>
 
 			<SecretCredentials/>
 		</Show>

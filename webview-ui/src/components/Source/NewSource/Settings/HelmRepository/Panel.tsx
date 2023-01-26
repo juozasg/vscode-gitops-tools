@@ -1,4 +1,5 @@
 import Checkbox from 'components/Common/Checkbox';
+import { ToolkitHelpLink } from 'components/Common/HelpLink';
 import { Collapse } from 'solid-collapse';
 import { createSignal } from 'solid-js';
 import Intervals from '../Intervals';
@@ -14,8 +15,10 @@ function Panel() {
 			<Collapse value={isOpen()} class="collapse-transition">
 				<div style="margin-bottom: 1rem">
 					<Checkbox store="source" field="helmPassCredentials">
-							Pass credentials to all domains (HTTP/S repositories only) <a href="https://fluxcd.io/flux/components/source/helmrepositories/#pass-credentials"><span class="codicon codicon-question"></span></a>
+							Pass credentials to all domains (HTTP/S repositories only)
 					</Checkbox>
+					<ToolkitHelpLink href="source/helmrepositories/#pass-credentials"/>
+
 				</div>
 				<Intervals/>
 			</Collapse>
