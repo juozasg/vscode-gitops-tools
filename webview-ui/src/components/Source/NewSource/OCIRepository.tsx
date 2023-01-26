@@ -4,6 +4,7 @@ import SettingsPanel from './Settings/OCIRepository/Panel';
 import Name from './Common/Name';
 import Namespace from './Common/Namespace';
 import TextInput from 'components/Common/TextInput';
+import { HelpLink, ToolkitHelpLink } from 'components/Common/HelpLink';
 
 
 const setRefType = (val: string) => setSource('ociRefType', val);
@@ -27,6 +28,28 @@ function OCIRepository() {
 					<TextInput store="source" field="ociRef" style="margin-left: 4px; width: 24.8rem !important"/>
 				</div>
 			</div>
+
+			<vscode-divider/>
+			<div style="margin-bottom: 1rem"><i>Authentication settings for private repositories</i></div>
+			<div>
+				<label>OCI Provider</label>
+				<div class="flex-row">
+					<ListSelect
+						store="source" field="ociProvider"
+						items={() => ['generic', 'aws', 'azure', 'gcp']}/>
+				</div>
+			</div>
+
+			<div>
+				<label><code>Secret</code> with authentication credentials for the provider <ToolkitHelpLink href="source/helmrepositories/#secret-reference"/></label>
+				<TextInput store="source" field="secretRef" class="long"/>
+			</div>
+
+			<div>
+				<label><code>ServiceAccount</code> with image pull secrets for authentication<ToolkitHelpLink href="source/ocirepositories/#service-account-reference"/></label>
+				<TextInput store="source" field="serviceAccount" class="long"/>
+			</div>
+
 
 			<SettingsPanel/>
 		</div>

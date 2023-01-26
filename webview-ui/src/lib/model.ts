@@ -56,7 +56,7 @@ export const [source, setSource] = createStore({
 	certFile: '',
 	caFile: '',
 	privateKeyFile: '', // for git
-	ociCertSecretRef: '', // OCI
+	certSecretRef : '', // OCI for TLS certs only
 
 
 	recurseSubmodules: false,

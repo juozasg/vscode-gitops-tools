@@ -1,23 +1,22 @@
 import Checkbox from 'components/Common/Checkbox';
+import { ToolkitHelpLink } from 'components/Common/HelpLink';
 import TextInput from 'components/Common/TextInput';
 
 
 function OCITLS() {
 	return (
 		<div>
-			<div style="margin-bottom: 1rem">
-				<Checkbox store="source" field="insecure">
-            Allow insecure (non-TLS) connection to the registry
-				</Checkbox>
+
+
+			<div style="margin-top: 1rem">
+				<label><code>Secret</code> used for TLS certificates <ToolkitHelpLink href="source/ocirepositories/#tls-certificates"/></label>
+				<TextInput store="source" field="certSecretRef" class="long"/>
 			</div>
 
-			<div>
-				<label><code>Secret</code> used for TLS certificates
-					<a href="https://fluxcd.io/flux/components/source/ocirepositories/#tls-certificates">
-						<span class="codicon codicon-question"></span>
-					</a>
-				</label>
-				<TextInput store="source" field="certRef" class="long"/>
+			<div style="margin-bottom: 1rem">
+				<Checkbox store="source" field="insecure">
+            Allow insecure (non-TLS) connection to the registry <ToolkitHelpLink href="source/ocirepositories/#insecure"/>
+				</Checkbox>
 			</div>
 		</div>
 	);

@@ -56,7 +56,6 @@ function HelmConnection() {
 
 
 
-
 		</div>
 	);
 }
