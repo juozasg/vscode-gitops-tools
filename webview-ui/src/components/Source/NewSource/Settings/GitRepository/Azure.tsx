@@ -15,7 +15,7 @@ function Azure() {
 				<div>
 					<ListSelect
 						store="source" field="azureScope"
-						items={() => ['branch', 'tag', 'semver']}/>
+						items={() => ['cluster', 'namespace']}/>
 				</div>
 			</div>
 		</div>

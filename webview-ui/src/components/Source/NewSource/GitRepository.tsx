@@ -4,6 +4,7 @@ import TextInput from 'components/Common/TextInput';
 import SettingsPanel from './Settings/GitRepository/Panel';
 import Name from './Common/Name';
 import Namespace from './Common/Namespace';
+import GitConnection from './Settings/GitRepository/GitConnection';
 
 function GitRepository() {
 	return (
@@ -25,7 +26,9 @@ function GitRepository() {
 					<TextInput store="source" field="gitRef" style="margin-left: 4px; width: 24.8rem !important"/>
 				</div>
 			</div>
+			<vscode-divider/>
 
+			<GitConnection/>
 			<SettingsPanel/>
 		</div>
 	);

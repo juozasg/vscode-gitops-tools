@@ -1,3 +1,4 @@
+import Checkbox from 'components/Common/Checkbox';
 import { Collapse } from 'solid-collapse';
 import { createSignal } from 'solid-js';
 import Intervals from '../Intervals';
@@ -11,19 +12,12 @@ function Panel() {
 			<h3 classList={{'collapse-toggle': true, 'open': isOpen()}}
 				onClick={() => setIsOpen(!isOpen())}><span class={`codicon ${isOpen() ? 'codicon-chevron-down' : 'codicon-chevron-right'}`}></span> Advanced Settings</h3>
 			<Collapse value={isOpen()} class="collapse-transition">
-				<div>
-					<vscode-panels activeId="helm-intervals-tab" aria-label="Advanced HelmRepository source settings">
-						<vscode-panel-tab id="helm-intervals-tab">Intervals</vscode-panel-tab>
-						<vscode-panel-tab id="helm-connection-tab">Connection</vscode-panel-tab>
-
-						<vscode-panel-view>
-							<Intervals/>
-						</vscode-panel-view>
-						<vscode-panel-view >
-							<Connection/>
-						</vscode-panel-view>
-					</vscode-panels>
+				<div style="margin-bottom: 1rem">
+					<Checkbox store="source" field="helmPassCredentials">
+							Pass credentials to all domains (HTTP/S repositories only) <a href="https://fluxcd.io/flux/components/source/helmrepositories/#pass-credentials"><span class="codicon codicon-question"></span></a>
+					</Checkbox>
 				</div>
+				<Intervals/>
 			</Collapse>
 		</div>
 	);

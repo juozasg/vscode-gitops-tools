@@ -45,7 +45,7 @@ export const [source, setSource] = createStore({
 	azureScope: 'cluster',
 
 	// connection settings
-	createSecret: true, // secretRef overrides other command authentication flags.
+	createSecret: false, // secretRef overrides other command authentication flags.
 	secretRef: '', // this secret contains appropriate credentials for selected source type
 	insecure: false, // non TLS HTTP for Bucket or OCI
 	passCredentials: false, // HelmRepository
@@ -55,8 +55,8 @@ export const [source, setSource] = createStore({
 	keyFile: '', // for TLS
 	certFile: '',
 	caFile: '',
-	certRef: '', // OCI
 	privateKeyFile: '', // for git
+	ociCertSecretRef: '', // OCI
 
 
 	recurseSubmodules: false,

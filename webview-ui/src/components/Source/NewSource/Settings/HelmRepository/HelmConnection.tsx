@@ -3,32 +3,30 @@ import { Show } from 'solid-js';
 import TextInput from 'components/Common/TextInput';
 import { isOCIHelm } from '../../HelmRepository';
 import Checkbox from 'components/Common/Checkbox';
+import { source } from 'lib/model';
+
+
+
+function SecretRefInput() {
+	return (
+		<div>
+			<label><code>Secret</code> with authentication credentials (TLS, basic auth or docker-secret) <a href="https://fluxcd.io/flux/components/source/helmrepositories/#secret-reference"><span class="codicon codicon-question"></span></a></label>
+			<TextInput store="source" field="secretRef" class="long"/>
+		</div>
+	);
+}
 
 
 function HelmConnection() {
 	return (
 		<div>
-			<div>
-				<label><code>Secret</code> with authentication credentials (TLS, basic auth or docker-secret) <a href="https://fluxcd.io/flux/components/source/helmrepositories/#secret-reference"><span class="codicon codicon-question"></span></a></label>
-				<TextInput store="source" field="secretRef" class="long"/>
-			</div>
 
-			<Show when={!isOCIHelm()}>
-				<div>
-					<label>Path to TLS cert file</label>
-					<TextInput store="source" field="certFile" class="long"/>
-				</div>
+			<Checkbox store="source" field="createSecret" style="margin-bottom: 1rem">Create new <code>Secret</code> with credentials&nbsp
+				<a href="https://fluxcd.io/flux/components/source/helmrepositories/#secret-reference">
+					<span class="codicon codicon-question"></span></a>
+			</Checkbox>
 
-				<div>
-					<label>Path to TLS key file</label>
-					<TextInput store="source" field="keyFile" class="long"/>
-				</div>
-
-				<div>
-					<label>Path to TLS CA cert file </label>
-					<TextInput store="source" field="caFile" class="long"/>
-				</div>
-
+			<Show when={source.createSecret} fallback={SecretRefInput}>
 				<div>
 					<label>Basic authentication username</label>
 					<TextInput store="source" field="username" class="medium"/>
@@ -38,13 +36,27 @@ function HelmConnection() {
 					<label>Basic authentication password</label>
 					<TextInput store="source" field="password" type="password" class="medium"/>
 				</div>
+				<Show when={!isOCIHelm()}>
+					<div>
+						<label>Path to TLS cert file</label>
+						<TextInput store="source" field="certFile" class="long"/>
+					</div>
 
-				<div style="margin-bottom: 1rem">
-					<Checkbox store="source" field="helmPassCredentials">
-						Pass credentials to all domains (HTTP/S repositories only) <a href="https://fluxcd.io/flux/components/source/helmrepositories/#pass-credentials"><span class="codicon codicon-question"></span></a>
-					</Checkbox>
-				</div>
+					<div>
+						<label>Path to TLS key file</label>
+						<TextInput store="source" field="keyFile" class="long"/>
+					</div>
+
+					<div>
+						<label>Path to TLS CA cert file </label>
+						<TextInput store="source" field="caFile" class="long"/>
+					</div>
+				</Show>
 			</Show>
+
+
+
+
 		</div>
 	);
 }

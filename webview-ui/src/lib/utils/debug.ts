@@ -16,7 +16,7 @@ export function debugStandalone() {
 			'clusterName': 'kind-cluster',
 			'clusterProvider': 'Generic',
 			'isClusterProviderUserOverride': false,
-			'isAzure': false,
+			'isAzure': true,
 		},
 		'gitInfo': {
 			'name': 'debug-standalone',
