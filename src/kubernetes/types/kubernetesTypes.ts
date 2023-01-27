@@ -63,6 +63,7 @@ export const enum KubernetesObjectKinds {
 	Namespace = 'Namespace',
 	Node = 'Node',
 	Pod = 'Pod',
+
 	ConfigMap = 'ConfigMap',
 }
 

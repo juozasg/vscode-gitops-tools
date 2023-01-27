@@ -7,76 +7,120 @@ import { params, ParamsDictionary } from './params';
 export const [createSource, setCreateSource] = createSignal(true);
 export const [selectedSource, setSelectedSource] = createSignal('');
 
-export const [source, setSource] = createStore({
+export const [commonResource, setCommonResource] = createStore({
 	kind: 'GitRepository',
 
 	name: 'podinfo',
 	namespace: 'flux-system',
 
-	gitUrl: 'https://github.com/stefanprodan/podinfo',
-	helmUrl: 'https://stefanprodan.github.io/podinfo',
-	ociUrl: 'oci://ghcr.io/stefanprodan/manifests/podinfo',
-
-	// bucketEndpoint: 'minio.minio.svc.cluster.local:9000',
-	bucketEndpoint: '',
-	bucketName: 'podinfo',
-	bucketRegion: '',
-	bucketProvider: 'generic',
-	bucketSecretRef: '',
-	bucketAccessKey: '',
-	bucketSecretKey: '',
-
-	gitRef: 'master',
-	gitRefType: 'branch',
-
-
-	helmPassCredentials: false,
-
-	ociRef: 'latest',
-	ociRefType: 'tag',
-	ociProvider: 'generic',
-
-	// sync
 	interval: '1m0s',
 	timeout: '5m0s',
+});
+
+export const [gitSource, setGitSource] = createStore({
+	url: 'https://github.com/stefanprodan/podinfo',
+	refType: 'branch',
+	ref: 'master',
 
 	// azure
 	createFluxConfig: true,
 	azureScope: 'cluster',
 
-	// connection settings
+	// sync
+	createSecret: false, // secretRef overrides other command authentication flags.
+	secretRef: '', // this secret contains appropriate credentials for selected source type
+
+	// used the secretRef is not provided
+	privateKeyFile: '', // for git
+	caFile: '',
+	username: '',
+	password: '',
+
+	recurseSubmodules: false,
+	ignorePaths: '',
+});
+
+export const [helmSource, setHelmSource] = createStore({
+	url: 'https://stefanprodan.github.io/podinfo',
+
+	// sync
+	createSecret: false, // secretRef overrides other command authentication flags.
+	secretRef: '', // this secret contains appropriate credentials for selected source type
+
+	username: '',
+	password: '',
+
+	caFile: '',
+	keyFile: '', // for TLS
+	certFile: '',
+
+	passCredentials: false,
+});
+
+export const [ociSource, setOCISource] = createStore({
+	url: 'oci://ghcr.io/stefanprodan/manifests/podinfo',
+	ref: 'latest',
+	refType: 'tag',
+	provider: 'generic',
+	ignorePaths: '',
+	insecure: false, // non TLS HTTP for Bucket or OCI
+	// sync
+	createSecret: false, // secretRef overrides other command authentication flags.
+	secretRef: '', // this secret contains appropriate credentials for selected source type
+	serviceAccount: '',
+});
+
+export const [bucketSource, setBucketSource] = createStore({
+	// bucketEndpoint: 'minio.minio.svc.cluster.local:9000',
+	endpoint: '',
+	buckerName: 'podinfo',
+	region: '',
+	provider: 'generic',
+	accessKey: '',
+	secretKey: '',
+	// sync
 	createSecret: false, // secretRef overrides other command authentication flags.
 	secretRef: '', // this secret contains appropriate credentials for selected source type
 	insecure: false, // non TLS HTTP for Bucket or OCI
-	passCredentials: false, // HelmRepository
-	username: '',
-	password: '',
-	serviceAccount: '',
-	keyFile: '', // for TLS
-	certFile: '',
-	caFile: '',
-	privateKeyFile: '', // for git
-	certSecretRef : '', // OCI for TLS certs only
+});
 
-
-	recurseSubmodules: false,
-} as ParamsDictionary);
 
 
 /* KUSTOMIZATION */
 
-export const [createKustomization, setCreateKustomization] = createSignal(false);
+export const [createWorkload, setCreateWorkload] = createSignal(false);
 
 export const [kustomization, setKustomization] = createStore({
 	name: 'podinfo',
 	namespace: 'flux-system',
+	source: '',  // Ex: GitRepo/podinfo.flux-system
 	path: '/kustomize',
 	targetNamespace: 'default',
+	serviceAccount: '',
 	dependsOn: '',
 	prune: true,
 });
 
+export const [helmRelease, setHelmReleast] = createStore({
 
+	--chart string                   Helm chart name or path
+	--chart-interval duration        the interval of which to check for new chart versions
+	--chart-version string           Helm chart version, accepts a semver range (ignored for charts from GitRepository sources)
+	--crds crds                      upgrade CRDs policy, available options are: (Skip, Create, CreateReplace)
+	--create-target-namespace        create the target namespace if it does not exist
+	--depends-on strings             HelmReleases that must be ready before this release can be installed, supported formats '<name>' and '<namespace>/<name>'
+-h, --help                           help for helmrelease
+	--kubeconfig-secret-ref string   the name of the Kubernetes Secret that contains a key with the kubeconfig file for connecting to a remote cluster
+	--reconcile-strategy string      the reconcile strategy for helm chart created by the helm release(accepted values: Revision and ChartRevision) (default "ChartVersion")
+	--release-name string            name used for the Helm release, defaults to a composition of '[<target-namespace>-]<HelmRelease-name>'
+	--service-account string         the name of the service account to impersonate when reconciling this HelmRelease
+	--source helmChartSource         source that contains the chart in the format '<kind>/<name>.<namespace>', where kind must be one of: (HelmRepository, GitRepository, Bucket)
+	--target-namespace string        namespace to install this release, defaults to the HelmRelease namespace
+	--values strings                 local path to values.yaml files, also accepts comma-separated values
+	--values-from strings            a Kubernetes object reference that contains the values.yaml data key in the format '<kind>/<name>', where kind must be one of: (Secret,ConfigMap)
+
+
+});
 export function getStore(storeName: string, variable: string) {
 	const store = (storeName === 'source') ? source : kustomization;
 	return () => store[variable];
