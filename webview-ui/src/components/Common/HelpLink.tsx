@@ -11,6 +11,5 @@ export function HelpLink(props: any)  {
 			<span class="codicon codicon-question">
 			</span>
 		</a>
-		// </diV>
 	);
 }

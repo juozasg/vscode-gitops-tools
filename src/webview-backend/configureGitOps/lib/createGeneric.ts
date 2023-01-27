@@ -19,6 +19,13 @@ export async function createConfigurationGeneric(data: ParamsDictionary) {
 			case 'OCIRepository':
 				await createOCIRepository(data);
 				break;
+			case 'HelmRepository':
+				await createOCIRepository(data);
+				break;
+			case 'BucketRepository':
+				await createOCIRepository(data);
+				break;
+
 		}
 	}
 
