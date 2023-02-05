@@ -5,7 +5,7 @@ function Azure() {
 	return (
 		<div style="margin-top: 1rem">
 			<div>
-				<Checkbox store="source" field="createFluxConfig">
+				<Checkbox store="gitRepository" field="createFluxConfig">
 					Create with FluxConfig
 				</Checkbox>
 				<div><i>A new <code>FluxConfig</code> resource will be created to manage this <code>Kustomization</code></i></div>
@@ -14,7 +14,7 @@ function Azure() {
 				<label>Scope</label>
 				<div>
 					<ListSelect
-						store="source" field="azureScope"
+						store="gitRepository" field="azureScope"
 						items={() => ['cluster', 'namespace']}/>
 				</div>
 			</div>

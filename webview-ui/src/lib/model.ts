@@ -1,6 +1,7 @@
 import { createEffect, createSignal } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { params } from './params';
+import { capitalize } from './utils/helpers';
 
 /* SOURCE */
 export const [createSource, setCreateSource] = createSignal(true);
@@ -51,7 +52,7 @@ export const [helmRepository, setHelmRepository] = createStore({
 	passCredentials: false,
 });
 
-export const [ociRepository, setOCIRepository] = createStore({
+export const [ociRepository, setOciRepository] = createStore({
 	url: 'oci://ghcr.io/stefanprodan/manifests/podinfo',
 	ref: 'latest',
 	refType: 'tag',
@@ -126,6 +127,7 @@ const getters: StoreMap = {
 	gitRepository,
 	ociRepository,
 	helmRepository,
+	bucket,
 	kustomization,
 	// getHelmRelease,
 };
@@ -133,10 +135,10 @@ const getters: StoreMap = {
 const setters: StoreMap = {
 	setSource,
 	setGitRepository,
-	setOCIRepository,
+	setOciRepository,
 	setHelmRepository,
+	setBucket,
 	setKustomization,
-	// setHelmRelease,
 };
 
 export function storeAccessors(props: any) {
@@ -151,7 +153,7 @@ export function storeAccessors(props: any) {
 		const field = props.field;
 
 		const getter = getters[`${store}`];
-		const setter = getters[`set${store}`];
+		const setter = setters[`set${capitalize(store)}`];
 
 		get = () => getter[field];
 		set = val => setter(field, val);
@@ -162,17 +164,17 @@ export function storeAccessors(props: any) {
 
 
 createEffect(() => {
-	if( params.gitInfo?.name) {
-		setSource('name',  params.gitInfo.name);
+	if(params.gitInfo?.name) {
+		setSource('name', params.gitInfo.name);
 	}
 
-	if( params.gitInfo?.branch) {
-		setGitRepository('url',  params.gitInfo.url);
+	if(params.gitInfo?.branch) {
+		setGitRepository('url', params.gitInfo.url);
 	}
 
-	if( params.gitInfo?.name) {
+	if(params.gitInfo?.name) {
 		setGitRepository('refType',  'branch');
-		setGitRepository('ref',  params.gitInfo.branch);
+		setGitRepository('ref', params.gitInfo.branch);
 	}
 
 	if(params.selectedSource && params.selectedSource !== '') {

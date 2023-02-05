@@ -7,8 +7,8 @@ type ExplicitGetSet = {
 
 
 type StoreAccessor = {
-	store: 'source';
-	field: keyof (typeof source);
+	store?: 'source';
+	field?: keyof (typeof source);
 } | {
 	store: 'gitRepository';
 	field: keyof (typeof gitRepository);
@@ -44,4 +44,3 @@ type ListItemProps = {
 
 
 export type ReactiveInputProps = StoreAccessor & ExplicitGetSet & InputProps & ListItemProps & Children;
-// export type ReactiveInputProps = StoreAccessor;

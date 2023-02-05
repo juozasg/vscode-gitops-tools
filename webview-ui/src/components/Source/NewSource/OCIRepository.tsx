@@ -1,13 +1,10 @@
 import ListSelect from 'components/Common/ListSelect';
-import { setSource, source } from 'lib/model';
 import SettingsPanel from './Settings/OCIRepository/Panel';
 import Name from './Common/Name';
 import Namespace from './Common/Namespace';
 import TextInput from 'components/Common/TextInput';
-import { HelpLink, ToolkitHelpLink } from 'components/Common/HelpLink';
+import { ToolkitHelpLink } from 'components/Common/HelpLink';
 
-
-const setRefType = (val: string) => setSource('ociRefType', val);
 
 function OCIRepository() {
 	return (
@@ -16,16 +13,16 @@ function OCIRepository() {
 			<Namespace/>
 			<div>
 				<label>Repository URL</label>
-				<TextInput store="source" field="ociUrl" class="long"/>
+				<TextInput store="ociRepository" field="url" class="long"/>
 			</div>
 
 			<div>
 				<label>Reference</label>
 				<div class="flex-row">
 					<ListSelect
-						store="source" field="ociRefType"
+						store="ociRepository" field="refType"
 						items={() => ['tag', 'semver', 'digest']}/>
-					<TextInput store="source" field="ociRef" style="margin-left: 4px; width: 24.8rem !important"/>
+					<TextInput store="ociRepository" field="ref" style="margin-left: 4px; width: 24.8rem !important"/>
 				</div>
 			</div>
 
@@ -35,7 +32,7 @@ function OCIRepository() {
 				<label>OCI Provider</label>
 				<div class="flex-row">
 					<ListSelect
-						store="source" field="ociProvider"
+						store="ociRepository" field="provider"
 						items={() => ['generic', 'aws', 'azure', 'gcp']}/>
 				</div>
 			</div>
@@ -47,7 +44,7 @@ function OCIRepository() {
 
 			<div>
 				<label><code>ServiceAccount</code> with image pull secrets for authentication<ToolkitHelpLink href="source/ocirepositories/#service-account-reference"/></label>
-				<TextInput store="source" field="serviceAccount" class="long"/>
+				<TextInput store="ociRepository" field="serviceAccount" class="long"/>
 			</div>
 
 

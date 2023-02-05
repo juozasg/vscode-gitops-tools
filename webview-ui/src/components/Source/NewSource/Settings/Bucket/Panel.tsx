@@ -14,7 +14,7 @@ function Panel() {
 				<div>
 					<div style="margin-bottom: 1rem"></div>
 					<Intervals/>
-					<Checkbox store="source" field="insecure">
+					<Checkbox store="bucket" field="insecure">
             Allow insecure (non-TLS) connection to the repository
 					</Checkbox>
 

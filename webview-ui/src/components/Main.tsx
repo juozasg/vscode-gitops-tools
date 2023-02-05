@@ -5,7 +5,7 @@ import { For, Show } from 'solid-js';
 import Kustomization from './Kustomization';
 import Source from './Source';
 
-import { createKustomization, createSource, kustomization, selectedSource, source } from 'lib/model';
+import { createWorkload, createSource, kustomization, selectedSource, source, gitRepository, helmRepository, ociRepository, bucket } from 'lib/model';
 import { vscode } from 'lib/utils/vscode';
 import { postModel } from 'App';
 
@@ -14,7 +14,7 @@ import { postModel } from 'App';
 const repositoryKind = () => createSource() ? source.kind : selectedSource().split('/')[0];
 const repositoryName = () => createSource() ? source.name : selectedSource().split('/')[1];
 const repositoryAction = () => createSource() ? 'Create new' : 'Use existing';
-const noActionPossible = () => !createKustomization() && !createSource();
+const noActionPossible = () => !createWorkload() && !createSource();
 
 
 
@@ -35,7 +35,7 @@ function Main() {
 				<Show when={!noActionPossible()}>
 					<p>{repositoryAction()} <code>{repositoryKind()}</code> '{repositoryName()}'</p>
 				</Show>
-				<Show when={createKustomization()}>
+				<Show when={createWorkload()}>
 					<p>Create new <code>Kustomization</code> '{kustomization.name}' for the <code>{repositoryKind()}</code></p>
 				</Show>
 
@@ -86,44 +86,40 @@ function missingFields() {
 
 	switch(source.kind) {
 		case 'GitRepository':
-			if(!(source.gitUrl?.length > 0)) {
+			if(!(gitRepository.url?.length > 0)) {
 				fields.push('Repository URL');
 			}
-			if(!(source.gitRef?.length > 0)) {
+			if(!(gitRepository.ref?.length > 0)) {
 				fields.push('Source branch, tag or semver');
 			}
 			break;
 		case 'HelmRepository':
-			if(!(source.helmUrl?.length > 0)) {
+			if(!(helmRepository.url?.length > 0)) {
 				fields.push('Repository URL');
 			}
 			break;
 		case 'OCIRepository':
-			if(!(source.ociUrl?.length > 0)) {
+			if(!(ociRepository.url?.length > 0)) {
 				fields.push('Repository URL');
 			}
-			if(!(source.ociRef?.length > 0)) {
+			if(!(ociRepository.ref?.length > 0)) {
 				fields.push('Source tag, semver or digest');
 			}
 			break;
-			break;
 		case 'Bucket':
-			if(!(source.bucketName?.length > 0)) {
+			if(!(bucket.bucketName?.length > 0)) {
 				fields.push('Bucket name');
 			}
-			if(!(source.bucketEndpoint?.length > 0)) {
+			if(!(bucket.endpoint?.length > 0)) {
 				fields.push('Bucket endpoint');
 			}
-			if(!source.bucketInsecure) {
-				if(source.bucketSecretRef.length === 0 && (source.bucketAccessKey.length === 0 || source.bucketSecretKey.length === 0)) {
+			if(!bucket.insecure) {
+				if(source.secretRef.length === 0 && (bucket.accessKey.length === 0 || bucket.secretKey.length === 0)) {
 					fields.push('Bucket Secret Ref or Access and Secret keys');
 				}
 			}
 			break;
-
 	}
-
-
 
 
 	return fields;

@@ -14,16 +14,16 @@ function GitRepository() {
 
 			<div>
 				<label>Repository URL</label>
-				<TextInput store="source" field="gitUrl" class="long"/>
+				<TextInput store="gitRepository" field="url" class="long"/>
 			</div>
 
 			<div>
 				<label>Reference</label>
 				<div class="flex-row">
 					<ListSelect
-						store="source" field="gitRefType"
+						store="gitRepository" field="refType"
 						items={() => ['branch', 'tag', 'semver']}/>
-					<TextInput store="source" field="gitRef" style="margin-left: 4px; width: 24.8rem !important"/>
+					<TextInput store="gitRepository" field="ref" style="margin-left: 4px; width: 24.8rem !important"/>
 				</div>
 			</div>
 			<vscode-divider/>

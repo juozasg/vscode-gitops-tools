@@ -30,27 +30,27 @@ function HelmConnection() {
 			<Show when={source.createSecret} fallback={SecretRefInput}>
 				<div>
 					<label>Basic authentication username</label>
-					<TextInput store="source" field="username" class="medium"/>
+					<TextInput store="helmRepository" field="username" class="medium"/>
 				</div>
 
 				<div>
 					<label>Basic authentication password</label>
-					<TextInput store="source" field="password" type="password" class="medium"/>
+					<TextInput store="helmRepository" field="password" type="password" class="medium"/>
 				</div>
 				<Show when={!isOCIHelm()}>
 					<div>
 						<label>Path to TLS cert file</label>
-						<TextInput store="source" field="certFile" class="long"/>
+						<TextInput store="helmRepository" field="certFile" class="long"/>
 					</div>
 
 					<div>
 						<label>Path to TLS key file</label>
-						<TextInput store="source" field="keyFile" class="long"/>
+						<TextInput store="helmRepository" field="keyFile" class="long"/>
 					</div>
 
 					<div>
 						<label>Path to TLS CA cert file </label>
-						<TextInput store="source" field="caFile" class="long"/>
+						<TextInput store="helmRepository" field="caFile" class="long"/>
 					</div>
 				</Show>
 			</Show>

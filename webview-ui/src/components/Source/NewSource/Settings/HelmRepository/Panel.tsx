@@ -14,7 +14,7 @@ function Panel() {
 				onClick={() => setIsOpen(!isOpen())}><span class={`codicon ${isOpen() ? 'codicon-chevron-down' : 'codicon-chevron-right'}`}></span> Advanced Settings</h3>
 			<Collapse value={isOpen()} class="collapse-transition">
 				<div style="margin-bottom: 1rem">
-					<Checkbox store="source" field="helmPassCredentials">
+					<Checkbox store="helmRepository" field="passCredentials">
 							Pass credentials to all domains (HTTP/S repositories only)
 					</Checkbox>
 					<ToolkitHelpLink href="source/helmrepositories/#pass-credentials"/>

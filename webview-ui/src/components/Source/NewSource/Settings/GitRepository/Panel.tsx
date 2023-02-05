@@ -35,7 +35,7 @@ function Panel() {
 
 						<vscode-panel-view>
 							<div>
-								<Checkbox store="source" field="recurseSubmodules">
+								<Checkbox store="gitRepository" field="recurseSubmodules">
 										Recurse submodules
 								</Checkbox>
 								<div><i>When enabled, configures the GitRepository source to initialize and include Git submodules in the artifact it produces</i></div>
