@@ -17,16 +17,16 @@ export const [source, setSource] = createStore({
 
 	createSecret: false, // secretRef overrides other command authentication flags.
 	secretRef: '', // this secret contains appropriate credentials for selected source type
+
+	// azure
+	createFluxConfig: true,
+	azureScope: 'cluster',
 });
 
 export const [gitRepository, setGitRepository] = createStore({
 	url: 'https://github.com/stefanprodan/podinfo',
 	refType: 'branch',
 	ref: 'master',
-
-	// azure
-	createFluxConfig: true,
-	azureScope: 'cluster',
 
 	// used the secretRef is not provided
 	privateKeyFile: '', // for git
@@ -60,6 +60,7 @@ export const [ociRepository, setOciRepository] = createStore({
 	insecure: false, // non TLS HTTP for Bucket or OCI
 
 	serviceAccount: '',
+	certRef: '',
 });
 
 export const [bucket, setBucket] = createStore({

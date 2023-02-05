@@ -21,7 +21,7 @@ function OCIRepository() {
 				<div class="flex-row">
 					<ListSelect
 						store="ociRepository" field="refType"
-						items={() => ['tag', 'semver', 'digest']}/>
+						items={() => ['tag', 'tagSemver', 'digest']}/>
 					<TextInput store="ociRepository" field="ref" style="margin-left: 4px; width: 24.8rem !important"/>
 				</div>
 			</div>

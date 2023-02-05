@@ -1,8 +1,7 @@
 import { createSignal, Show } from 'solid-js';
 import { Collapse } from 'solid-collapse';
 
-import Connection from './GitConnection';
-import Azure from './Azure';
+import Azure from '../Azure';
 import { params } from 'lib/params';
 import SettingsIntervals from '../Intervals';
 import Checkbox from 'components/Common/Checkbox';

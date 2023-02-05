@@ -125,7 +125,11 @@ async function createKustomizationGenericCluster(
 		newKustomizationName = gitRepositoryName;
 	}
 
-	await fluxTools.createKustomization(newKustomizationName,  `GitRepository/${gitRepositoryName}`, relativeKustomizationPath);
+	await fluxTools.createKustomization({
+		name: newKustomizationName,
+		source: `GitRepository/${gitRepositoryName}`,
+		path: relativeKustomizationPath,
+	});
 }
 
 /**

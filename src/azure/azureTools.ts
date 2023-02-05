@@ -29,6 +29,7 @@ export const enum AzureConstants {
 
 
 export type CreateSourceGitAzureArgs = Parameters<typeof azureTools['createSourceGit']>[0];
+export type CreateSourceBucketAzureArgs = Parameters<typeof azureTools['createSourceBucket']>[0];
 
 
 class AzureTools {
@@ -252,14 +253,14 @@ class AzureTools {
 		interval?: string;
 		timeout?: string;
 		caCert?: string;
-		caCertFile?: string;
+		caFile?: string;
 		httpsKey?: string;
 		httpsUser?: string;
 		knownHosts?: string;
 		knownHostsFile?: string;
 		localAuthRef?: string;
 		sshPrivateKey?: string;
-		sshPrivateKeyFile?: string;
+		privateKeyFile?: string;
 		kustomizationName?: string;
 		kustomizationPath?: string;
 		kustomizationDependsOn?: string;
@@ -279,14 +280,14 @@ class AzureTools {
 		const intervalArg = args.interval ? ` --interval "${args.interval}"` : '';
 		const timeoutArg = args.timeout ? ` --timeout "${args.timeout}"` : '';
 		const caCertArg = args.caCert ? ` --https-ca-cert "${args.caCert}"` : '';
-		const caCertFileArg = args.caCertFile ? ` --https-ca-cert-file "${args.caCertFile}"` : '';
+		const caCertFileArg = args.caFile ? ` --https-ca-cert-file "${args.caFile}"` : '';
 		const httpsKeyArg = args.httpsKey ? ` --https-key "${args.httpsKey}"` : '';
 		const httpsUserArg = args.httpsUser ? ` --https-user "${args.httpsUser}"` : '';
 		const knownHostsArg = args.knownHosts ? ` --known-hosts "${args.knownHosts}"` : '';
 		const knownHostsFileArg = args.knownHostsFile ? ` --known-hosts-file "${args.knownHostsFile}"` : '';
 		const localAuthRefArg = args.localAuthRef ? ` --local-auth-ref "${args.localAuthRef}"` : '';
 		const sshPrivateKeyArg = args.sshPrivateKey ? ` --ssh-private-key "${args.sshPrivateKey}"` : '';
-		const sshPrivateKeyFileArg = args.sshPrivateKeyFile ? ` --ssh-private-key-file "${args.sshPrivateKeyFile}"` : '';
+		const sshPrivateKeyFileArg = args.privateKeyFile ? ` --ssh-private-key-file "${args.privateKeyFile}"` : '';
 
 		const createSourceShellResult = await this.invokeAzCommand(
 			`az k8s-configuration flux create --name ${args.sourceName}${urlArg}${scopeArg}${namespaceArg}${branchArg}${tagArg}${semverArg}${commitArg}${intervalArg}${timeoutArg}${caCertArg}${caCertFileArg}${httpsKeyArg}${httpsUserArg}${knownHostsArg}${knownHostsFileArg}${localAuthRefArg}${sshPrivateKeyArg}${sshPrivateKeyFileArg}${this.makeKustomizationQueryPiece(args)}`,
@@ -305,13 +306,8 @@ class AzureTools {
 		}
 
 		const deployKey: string | undefined = createSourceOutput.repositoryPublicKey;
-		if (!deployKey) {
-			return;
-		}
 
-		return {
-			deployKey,
-		};
+		return deployKey;
 	}
 
 	/**

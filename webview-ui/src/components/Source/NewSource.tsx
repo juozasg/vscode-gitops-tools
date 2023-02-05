@@ -1,6 +1,7 @@
 import { Tabs } from '@microsoft/fast-foundation';
 import { ToolkitHelpLink } from 'components/Common/HelpLink';
-import { onMount } from 'solid-js';
+import { params } from 'lib/params';
+import { onMount, Show } from 'solid-js';
 import { setSource, source } from '../../lib/model';
 
 import Bucket from './NewSource/Bucket';
@@ -28,14 +29,15 @@ function NewSource() {
 					GitRepository <ToolkitHelpLink href="source/gitrepositories/" />
 				</vscode-panel-tab>
 
-				<vscode-panel-tab id="HelmRepository-tab">
+				<Show when={!params.clusterInfo?.isAzure}>
+					<vscode-panel-tab id="HelmRepository-tab">
 					HelmRepository <ToolkitHelpLink href="source/helmrepositories/"/>
-				</vscode-panel-tab>
+					</vscode-panel-tab>
 
-				<vscode-panel-tab id="OCIRepository-tab">
+					<vscode-panel-tab id="OCIRepository-tab">
 					OCIRepository <ToolkitHelpLink href="source/ocirepositories/"/>
-				</vscode-panel-tab>
-
+					</vscode-panel-tab>
+				</Show>
 			 	<vscode-panel-tab id="Bucket-tab">
 					Bucket <ToolkitHelpLink href="source/buckets/"/>
 				</vscode-panel-tab>
@@ -44,13 +46,15 @@ function NewSource() {
 					<GitRepository/>
 				</vscode-panel-view>
 
-				<vscode-panel-view>
-					<HelmRepository/>
-				</vscode-panel-view>
+				<Show when={!params.clusterInfo?.isAzure}>
+					<vscode-panel-view>
+						<HelmRepository/>
+					</vscode-panel-view>
 
-				<vscode-panel-view>
-					<OCIRepository/>
-				</vscode-panel-view>
+					<vscode-panel-view>
+						<OCIRepository/>
+					</vscode-panel-view>
+				</Show>
 
 				<vscode-panel-view>
 					<Bucket/>

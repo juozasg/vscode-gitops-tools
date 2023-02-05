@@ -1,6 +1,6 @@
 import { window, workspace } from 'vscode';
 import { telemetry } from '../../../extension';
-import { CreateSourceGitGenericArgs, fluxTools } from '../../../flux/fluxTools';
+import { fluxTools } from '../../../flux/fluxTools';
 import { TelemetryErrorEventNames, TelemetryEventNames } from '../../../telemetry';
 import { ParamsDictionary } from '../../../utils/typeUtils';
 
@@ -11,58 +11,15 @@ export async function exportConfigurationGeneric(data: ParamsDictionary) {
 
 	let yaml = '';
 
-	if(data.source?.kind) {
-		switch(data.source.kind) {
-			case 'GitRepository':
-				yaml += await exportGitRepository(data);
-				break;
-			case 'OCIRepository':
-				yaml += await exportOCIRepository(data);
-				break;
-		}
+	if(data.source) {
+		yaml += await fluxTools.exportSource(data.source);
 	}
 
 	if(data.kustomization) {
-		yaml += await exportKustomization(data);
+		yaml += await fluxTools.exportKustomization(data.kustomization);
 	}
 
 	showYaml(yaml);
-}
-
-
-
-
-async function exportGitRepository(data: ParamsDictionary) {
-	const source = data.source;
-
-	const args: CreateSourceGitGenericArgs = {
-		sourceName: source.name,
-		url: source.gitUrl,
-		...source,
-	};
-	return await fluxTools.exportSourceGit(args);
-}
-
-async function exportOCIRepository(data: ParamsDictionary) {
-	const source = data.source;
-
-	const args: CreateSourceGitGenericArgs = {
-		sourceName: source.name,
-		url: source.ociUrl,
-		...source,
-	};
-
-	return await fluxTools.exportSourceOCI(args);
-}
-
-async function exportKustomization(data: ParamsDictionary) {
-	const source = data.source;
-	const kustomization = data.kustomization;
-
-	let sourceRef = source ? `${source.kind}/${source.name}` : data.selectedSource;
-	return await fluxTools.exportKustomization(kustomization.name, sourceRef, kustomization.path,
-		kustomization.namespace, kustomization.targetNamespace,
-		kustomization.dependsOn, kustomization.prune);
 }
 
 

@@ -1,59 +1,8 @@
 import gitUrlParse from 'git-url-parse';
 import { commands, env, Uri, window } from 'vscode';
-import { azureTools, CreateSourceGitAzureArgs } from '../azure/azureTools';
+import { azureTools } from '../azure/azureTools';
 import { CommandId } from '../commands';
-import { telemetry } from '../extension';
-import { CreateSourceGitGenericArgs, fluxTools } from '../flux/fluxTools';
-import { KubernetesObjectKinds } from '../kubernetes/types/kubernetesTypes';
-import { TelemetryEventNames } from '../telemetry';
-import { refreshSourcesTreeView, refreshWorkloadsTreeView } from '../views/treeViews';
 
-export async function createGitRepositoryGenericCluster(args: CreateSourceGitGenericArgs) {
-	const parsedGitUrl = gitUrlParse(args.url);
-	if (isUrlSourceAzureDevops(parsedGitUrl.source)) {
-		// Azure devops does not support SSH key algorithm `ecdsa`
-		args.sshKeyAlgorithm = 'rsa';
-	}
-
-	const deployKey = await fluxTools.createSourceGit(args);
-	refreshSourcesTreeView();
-
-	setTimeout(() => {
-		// Wait a bit for the repository to have a failed state in case of SSH url
-		refreshSourcesTreeView();
-	}, 1000);
-	showDeployKeyNotificationIfNeeded(args.url, deployKey?.deployKey);
-}
-
-export async function createGitRepositoryAzureCluster(args: CreateSourceGitAzureArgs) {
-
-	telemetry.send(TelemetryEventNames.CreateSource, {
-		kind: KubernetesObjectKinds.GitRepository,
-	});
-
-	const deployKey = await azureTools.createSourceGit(args);
-
-	setTimeout(() => {
-		// Wait a bit for the repository to have a failed state in case of SSH url
-		refreshSourcesTreeView();
-		refreshWorkloadsTreeView();
-	}, 1000);
-	showDeployKeyNotificationIfNeeded(args.url, deployKey?.deployKey);
-}
-
-export async function createBucketAzureCluster(args: Parameters<typeof azureTools['createSourceBucket']>[0]) {
-
-	telemetry.send(TelemetryEventNames.CreateSource, {
-		kind: KubernetesObjectKinds.Bucket,
-	});
-
-	await azureTools.createSourceBucket(args);
-
-	setTimeout(() => {
-		refreshSourcesTreeView();
-		refreshWorkloadsTreeView();
-	}, 1000);
-}
 
 /**
  * Show notifications reminding users to add a public key

@@ -1,9 +1,9 @@
-import { createGitRepositoryGenericCluster } from '../../../commands/createSource';
+import { showDeployKeyNotificationIfNeeded } from '../../../commands/createSource';
 import { telemetry } from '../../../extension';
-import { CreateSourceGitGenericArgs, fluxTools } from '../../../flux/fluxTools';
+import { fluxTools } from '../../../flux/fluxTools';
 import { TelemetryEventNames } from '../../../telemetry';
 import { ParamsDictionary } from '../../../utils/typeUtils';
-import { refreshAllTreeViews, refreshResourcesTreeViews } from '../../../views/treeViews';
+import { refreshAllTreeViews, refreshResourcesTreeViews, refreshSourcesTreeView } from '../../../views/treeViews';
 
 export async function createConfigurationGeneric(data: ParamsDictionary) {
 	telemetry.send(TelemetryEventNames.CreateSource, {
@@ -11,64 +11,19 @@ export async function createConfigurationGeneric(data: ParamsDictionary) {
 	});
 
 
-	if(data.source?.kind) {
-		switch(data.source.kind) {
-			case 'GitRepository':
-				await createGitRepository(data);
-				break;
-			case 'OCIRepository':
-				await createOCIRepository(data);
-				break;
-			case 'HelmRepository':
-				await createHelmRepository(data);
-				break;
-			case 'Bucket':
-				await createBucket(data);
-				break;
+	if(data.source) {
+		const deployKey = await fluxTools.createSource(data.source);
+		showDeployKeyNotificationIfNeeded(data.source.url, deployKey);
+		setTimeout(() => {
+			// Wait a bit for the repository to have a failed state in case of SSH url
+			refreshSourcesTreeView();
+		}, 1000);
 
-		}
 	}
 
 	if(data.kustomization) {
-		createKustomization(data);
+		await fluxTools.createKustomization(data.kustomization);
 	}
 
 	refreshAllTreeViews();
-}
-
-
-async function createGitRepository(data: ParamsDictionary) {
-	const source = data.source;
-
-	const args: CreateSourceGitGenericArgs = {
-		sourceName: source.name,
-		url: source.gitUrl,
-		...source,
-	};
-	await createGitRepositoryGenericCluster(args);
-}
-
-async function createOCIRepository(data: ParamsDictionary) {
-	const source = data.source;
-
-	const args: CreateSourceGitGenericArgs = {
-		sourceName: source.name,
-		url: source.ociUrl,
-		...source,
-	};
-
-	await fluxTools.createSourceOCI(args);
-	refreshResourcesTreeViews();
-}
-
-async function createKustomization(data: ParamsDictionary) {
-	const source = data.source;
-	const kustomization = data.kustomization;
-
-	let sourceRef = source ? `${source.kind}/${source.name}.${source.namespace}` : data.selectedSource;
-	await fluxTools.createKustomization(kustomization.name, sourceRef, kustomization.path,
-		kustomization.namespace, kustomization.targetNamespace,
-		kustomization.dependsOn, kustomization.prune);
-
-	refreshResourcesTreeViews();
 }

@@ -84,7 +84,7 @@ export async function createGitRepository(fileExplorerUri?: Uri, kustomizationNa
 	let deployKey: string | undefined;
 
 	if (currentClusterInfo.result.isAzure) {
-		const createGitRepoShellResult = await azureTools.createSourceGit({
+		deployKey = await azureTools.createSourceGit({
 			contextName: currentClusterInfo.result.contextName,
 			sourceName: newGitRepositorySourceName,
 			url: gitUrl,
@@ -93,17 +93,17 @@ export async function createGitRepository(fileExplorerUri?: Uri, kustomizationNa
 			kustomizationName,
 			kustomizationPath,
 		});
-		deployKey = createGitRepoShellResult?.deployKey;
 		// az automatically creates a Kustomization
 		refreshWorkloadsTreeView();
 	} else {
 		// generic cluster
-		const createGitRepoShellResult = await fluxTools.createSourceGit({
-			sourceName: newGitRepositorySourceName,
+		deployKey = await fluxTools.createSource({
+			kind: 'GitRepository',
+			name: newGitRepositorySourceName,
 			url: gitUrl,
 			branch: gitBranch,
 		});
-		deployKey = createGitRepoShellResult?.deployKey;
+
 	}
 
 	showDeployKeyNotificationIfNeeded(gitUrl, deployKey);

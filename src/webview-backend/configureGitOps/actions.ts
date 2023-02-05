@@ -4,7 +4,7 @@ import { createConfigurationGeneric } from './lib/createGeneric';
 import { exportConfigurationGeneric } from './lib/exportGeneric';
 
 
-const isAzure = (data: ParamsDictionary) => data.clusterInfo.isAzure && (data.source?.createFluxConfig || data.selectedSource);
+const isAzure = (data: ParamsDictionary) => data.clusterInfo.isAzure && data.source?.createFluxConfig;
 
 export async function actionCreate(data: ParamsDictionary) {
 	if(isAzure(data)) {
