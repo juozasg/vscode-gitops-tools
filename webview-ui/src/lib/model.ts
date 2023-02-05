@@ -5,7 +5,6 @@ import { capitalize } from './utils/helpers';
 
 /* SOURCE */
 export const [createSource, setCreateSource] = createSignal(true);
-export const [selectedSource, setSelectedSource] = createSignal('');
 
 export const [source, setSource] = createStore({
 	kind: 'GitRepository',
@@ -93,30 +92,59 @@ export const [kustomization, setKustomization] = createStore({
 });
 
 
-/*
-export const [helmRelease, setHelmRelease] = createStore({
 
-	name: 'podinfo',
-	chart: 'podinfo',
-	chartInterval: '1m0s',
-	chartVersion: '>4.0.0', // (ignored for charts from GitRepository sources)
-	crds:  'Create', // Skip, Create, CreateReplace
-	createTargetNamespace: true,
-	dependsOn: '', // supported formats '<name>' and '<namespace>/<name>'
-	kubeconfigSecretRef: '', // the name of the Kubernetes Secret that contains a key with the kubeconfig file for connecting to a remote cluster
-	reconcileStrategy: 'ChartVersion', // reconcile strategy for helm chart created by the helm release(accepted values: Revision and ChartRevision)
-	releaseName: '', // defaults to a composition of '[<target-namespace>-]<HelmRelease-name>'
+// export const [helmRelease, setHelmRelease] = createStore({
+// 	name: 'podinfo',
+// 	chart: 'podinfo',
+// 	chartInterval: '1m0s',
+// 	chartVersion: '>4.0.0', // (ignored for charts from GitRepository sources)
+// 	crds:  'Create', // Skip, Create, CreateReplace
+// 	createTargetNamespace: true,
+// 	dependsOn: '', // supported formats '<name>' and '<namespace>/<name>'
+// 	kubeconfigSecretRef: '', // the name of the Kubernetes Secret that contains a key with the kubeconfig file for connecting to a remote cluster
+// 	reconcileStrategy: 'ChartVersion', // reconcile strategy for helm chart created by the helm release(accepted values: Revision and ChartRevision)
+// 	releaseName: '', // defaults to a composition of '[<target-namespace>-]<HelmRelease-name>'
+// 	serviceAccount: '',
+// 	source: '', // TODO: refactor into workload store
+// 	targetNamespace: '',
+// 	values: '',
+// 	valuesFrom: '',
+// });
 
-	// 	--reconcile-strategy string      the reconcile strategy for helm chart created by the helm release(accepted values: Revision and ChartRevision) (default "ChartVersion")
-	// 	--release-name string            name used for the Helm release, defaults to a composition of '[<target-namespace>-]<HelmRelease-name>'
-	// 	--service-account string         the name of the service account to impersonate when reconciling this HelmRelease
-	// 	--source helmChartSource         source that contains the chart in the format '<kind>/<name>.<namespace>', where kind must be one of: (HelmRepository, GitRepository, Bucket)
-	// 	--target-namespace string        namespace to install this release, defaults to the HelmRelease namespace
-	// 	--values strings                 local path to values.yaml files, also accepts comma-separated values
-	// 	--values-from strings            a Kubernetes object reference that contains the values.yaml data key in the format '<kind>/<name>', where kind must be one of: (Secret,ConfigMap)
 
+// EFFECTS
+
+
+createEffect(() => {
+	if(params.gitInfo?.name) {
+		setSource('name', params.gitInfo.name);
+	}
+
+	if(params.gitInfo?.branch) {
+		setGitRepository('url', params.gitInfo.url);
+	}
+
+	if(params.gitInfo?.name) {
+		setGitRepository('refType',  'branch');
+		setGitRepository('ref', params.gitInfo.branch);
+	}
+
+	if(params.selectedSource && params.selectedSource !== '') {
+		setKustomization('source', params.selectedSource);
+	}
 });
-*/
+
+createEffect(() => {
+	if(createSource()) {
+		setKustomization('source', `${source.kind}/${source.name}.${source.namespace}`);
+	} else {
+		const s = params.sources[0];
+		setKustomization('source', `${s.kind}/${s.name}.${s.namespace}`);
+	}
+});
+
+
+// GETTERS AND SETTERS
 
 interface StoreMap {
 	[key: string]: any;
@@ -161,24 +189,4 @@ export function storeAccessors(props: any) {
 
 	return {get, set};
 }
-
-
-createEffect(() => {
-	if(params.gitInfo?.name) {
-		setSource('name', params.gitInfo.name);
-	}
-
-	if(params.gitInfo?.branch) {
-		setGitRepository('url', params.gitInfo.url);
-	}
-
-	if(params.gitInfo?.name) {
-		setGitRepository('refType',  'branch');
-		setGitRepository('ref', params.gitInfo.branch);
-	}
-
-	if(params.selectedSource && params.selectedSource !== '') {
-		setSelectedSource(params.selectedSource);
-	}
-});
 

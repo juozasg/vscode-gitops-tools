@@ -5,14 +5,11 @@ import { For, Show } from 'solid-js';
 import Kustomization from './Kustomization';
 import Source from './Source';
 
-import { createWorkload, createSource, kustomization, selectedSource, source, gitRepository, helmRepository, ociRepository, bucket } from 'lib/model';
+import { createWorkload, createSource, kustomization, source, gitRepository, helmRepository, ociRepository, bucket } from 'lib/model';
 import { vscode } from 'lib/utils/vscode';
 import { postModel } from 'App';
 
 
-
-const repositoryKind = () => createSource() ? source.kind : selectedSource().split('/')[0];
-const repositoryName = () => createSource() ? source.name : selectedSource().split('/')[1];
 const repositoryAction = () => createSource() ? 'Create new' : 'Use existing';
 const noActionPossible = () => !createWorkload() && !createSource();
 
@@ -33,10 +30,10 @@ function Main() {
 			<div class="actions">
 				<h2 style="margin-bottom: 2rem">Actions</h2>
 				<Show when={!noActionPossible()}>
-					<p>{repositoryAction()} <code>{repositoryKind()}</code> '{repositoryName()}'</p>
+					<p>{repositoryAction()} <code>{kustomization.source}</code></p>
 				</Show>
 				<Show when={createWorkload()}>
-					<p>Create new <code>Kustomization</code> '{kustomization.name}' for the <code>{repositoryKind()}</code></p>
+					<p>Create new <code>Kustomization</code> '{kustomization.name}' for <code>{kustomization.source}</code></p>
 				</Show>
 
 				<Show when={noActionPossible()}>

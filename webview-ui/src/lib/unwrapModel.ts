@@ -1,11 +1,9 @@
-import { createEffect, createSignal } from 'solid-js';
-import { createStore, unwrap } from 'solid-js/store';
-import { createWorkload, createSource, kustomization, selectedSource, source, gitRepository, ociRepository, helmRepository, bucket } from './model';
+import { unwrap } from 'solid-js/store';
+import { createWorkload, createSource, kustomization, source, gitRepository, ociRepository, helmRepository, bucket } from './model';
 import { params, ParamsDictionary } from './params';
 
 
 function unwrapSourceKind() {
-
 	switch(source.kind) {
 		case 'GitRepository':
 			return unwrap(gitRepository);
@@ -19,14 +17,12 @@ function unwrapSourceKind() {
 		case 'Bucket':
 			return unwrap(bucket);
 	}
-
-
 }
 
 function unwrapSource() {
 	let s: any = unwrap(source);
 
-	if(s.createSecret) {
+	if(s.createSecret && s.kind !== 'OCIRepository') {
 		s['secretRef'] = '';
 	}
 
@@ -60,8 +56,6 @@ export function unwrapModel() {
 
 	if(createSource()) {
 		model.source = unwrapSource();
-	} else {
-		model.selectedSource = selectedSource();
 	}
 
 	if(createWorkload()) {

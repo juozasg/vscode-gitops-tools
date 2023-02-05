@@ -27,12 +27,14 @@ function receiveParams() {
 }
 
 export function postModel(action: 'create' | 'show-yaml') {
+	const model = unwrapModel();
 	vscode.postMessage({
 		action,
-		data: unwrapModel(),
+		data: model,
 	});
 
-	console.log(unwrapModel());
+	console.log(model);
+	console.log(model.source);
 }
 
 

@@ -75,13 +75,8 @@ export function createSourceCLIArgs(kind: SourceObjectKinds, data: any): string 
 	}
 }
 
-
-const args = [
-	'url',
-
-]
-
-
+const commonArgs = ['url', 'name', 'namespace', 'interval', 'timeout', 'secretRef'];
+const GitReosiporyArgs = ['branch', 'tag', ]
 
 
 
@@ -110,7 +105,10 @@ function createSourceGitCommand(args: CreateSourceGitGenericArgs) {
 
 
 createSourceOCICommand(args: CreateSourceOCIGenericArgs) {
-	const urlArg = ` --url "${args.url}"`;
+
+	args += `--${args[0].snakecase}`;
+
+	// const urlArg = ` --url "${args.url}"`;
 	const namespaceArg = args.namespace ? ` --namespace "${args.namespace}"` : '';
 	const digestArg = args.digest ? ` --digest "${args.digest}"` : '';
 	const tagArg = args.tag ? ` --tag "${args.tag}"` : '';
@@ -125,30 +123,6 @@ createSourceOCICommand(args: CreateSourceOCIGenericArgs) {
 
 	return `flux create source oci ${args.sourceName}${urlArg}${digestArg}${namespaceArg}${tagArg}${semverArg}${intervalArg}${timeoutArg}${certRefArg}${secretRefArg}${serviceAccountArg}${insecureArg}${providerArg}`;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

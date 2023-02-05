@@ -1,4 +1,4 @@
-import Checkbox from 'components/Common/Checkbox';
+import TextInput from 'components/Common/TextInput';
 import { Collapse } from 'solid-collapse';
 import { createSignal } from 'solid-js';
 import SettingsIntervals from '../Intervals';
@@ -16,11 +16,9 @@ function Panel() {
 					<SettingsTLS/>
 					<SettingsIntervals/>
 					<div style="margin-bottom: 1rem">
-						<Checkbox store="ociRepository" field="ignorePaths">
-							Paths to ignore resources (can specify multiple paths with commas: path1,path2)
-						</Checkbox>
+						<label>Paths to ignore resources (can specify multiple paths with commas: path1, path2)</label>
+						<TextInput store="ociRepository" field="ignorePaths" class="long"/>
 					</div>
-
 				</div>
 			</Collapse>
 		</div>

@@ -1,6 +1,6 @@
 import { Show } from 'solid-js';
 
-import { createWorkload, createSource, selectedSource, setCreateWorkload, source, gitRepository } from 'lib/model';
+import { createWorkload, createSource, setCreateWorkload, source, gitRepository, kustomization } from 'lib/model';
 import { params } from 'lib/params';
 import ListSelect from 'components/Common/ListSelect';
 import Checkbox from 'components/Common/Checkbox';
@@ -8,8 +8,6 @@ import TextInput from './Common/TextInput';
 import { ToolkitHelpLink } from './Common/HelpLink';
 
 function Kustomization() {
-	const repositoryName = () => createSource() ? source.name : selectedSource();
-
 	const isAzure = () => params.clusterInfo?.isAzure && (!createSource() || (source.kind === 'GitRepository' && gitRepository.createFluxConfig));
 
 	const targetNamespaces = () => [...(params.namespaces?.values() || []), '<unset>'];
@@ -18,11 +16,9 @@ function Kustomization() {
 		<div>
 			<h2>Create Kustomization <ToolkitHelpLink href="kustomize/kustomization/"/></h2>
 			<div style="margin-top: 1rem; margin-bottom: 2rem">
-				<Show when={createSource()}>
-					<Checkbox get={createWorkload} set={setCreateWorkload}>
-						Create a <code>Kustomization</code>
-					</Checkbox>
-				</Show>
+				<Checkbox get={createWorkload} set={setCreateWorkload}>
+					Create a <code>Kustomization</code>
+				</Checkbox>
 			</div>
 			<Show when={createWorkload()}>
 				<div>
@@ -42,7 +38,7 @@ function Kustomization() {
 					</div>
 				</Show>
 				<div>
-					<label>File path in <code>GitRepository</code> '{repositoryName()}'</label>
+					<label>File path in <code>{kustomization.source}</code></label>
 					<TextInput store="kustomization" field="path" class="long"/>
 				</div>
 				<Show when={!isAzure()}>
