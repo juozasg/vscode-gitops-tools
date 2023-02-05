@@ -1,36 +1,45 @@
 import { createEffect, createSignal } from 'solid-js';
 import { createStore, unwrap } from 'solid-js/store';
-import { createKustomization, createSource, kustomization, selectedSource, source } from './model';
+import { createWorkload, createSource, kustomization, selectedSource, source, gitRepository, ociRepository, helmRepository, bucket } from './model';
 import { params, ParamsDictionary } from './params';
 
 
-function unwrapSource() {
-	const s = unwrap(source);
+function unwrapSourceKind() {
 
-	delete s['branch'];
-	delete s['tag'];
-	delete s['semver'];
-	delete s['digest'];
+	switch(source.kind) {
+		case 'GitRepository':
+			return unwrap(gitRepository);
+
+		case 'OCIRepository':
+			return unwrap(ociRepository);
+
+		case 'HelmRepository':
+			return unwrap(helmRepository);
+
+		case 'Bucket':
+			return unwrap(bucket);
+	}
+
+
+}
+
+function unwrapSource() {
+	let s: any = unwrap(source);
 
 	if(s.createSecret) {
-		delete s['secretRef'];
+		s['secretRef'] = '';
 	}
 
-	switch(s.kind) {
-		case 'GitRepository':
-			// Ex: s['branch'] = 'master'
-			s[s.gitRefType] = s.gitRef;
-			break;
-		case 'OCIRepository':
-			s[s.ociRefType] = s.ociRef;
-			break;
+	// merge common and specific type source parameters
+	s = {...s, ...unwrapSourceKind()};
+
+
+	if(s['refType']) {
+		// s['tag'] = 'latest';
+		s[s['refType']] = s['ref'];
 	}
 
-	for(const key in s) {
-		if(s[key] === '') {
-			delete s[key];
-		}
-	}
+
 	return s;
 }
 
@@ -55,7 +64,7 @@ export function unwrapModel() {
 		model.selectedSource = selectedSource();
 	}
 
-	if(createKustomization()) {
+	if(createWorkload()) {
 		model.kustomization = unwrapKustomization();
 	}
 

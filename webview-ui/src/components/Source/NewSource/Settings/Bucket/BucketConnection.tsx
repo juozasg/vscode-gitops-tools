@@ -2,7 +2,7 @@ import Checkbox from 'components/Common/Checkbox';
 import { ToolkitHelpLink } from 'components/Common/HelpLink';
 import ListSelect from 'components/Common/ListSelect';
 import TextInput from 'components/Common/TextInput';
-import { setSource, source } from 'lib/model';
+import { bucket, source, setSource } from 'lib/model';
 import { createSignal, Show } from 'solid-js';
 
 
@@ -11,7 +11,7 @@ function AzureSettings() {
 		<>
 			<div>
 				<label>Endpoint</label>
-				<TextInput store="source" field="bucketEndpoint" class="medium"/>
+				<TextInput store="bucket" field="endpoint" class="medium"/>
 			</div>
 
 			<div>
@@ -31,12 +31,12 @@ function SecretCredentials() {
 		<>
 			<div>
 				<label>Provider <code>accesskey</code></label>
-				<TextInput store="source" field="bucketAccessKey" class="medium"/>
+				<TextInput store="bucket" field="accessKey" class="medium"/>
 			</div>
 
 			<div>
 				<label>Provider <code>secretkey</code> </label>
-				<TextInput store="source" field="bucketSecretKey" class="medium"/>
+				<TextInput store="bucket" field="secretKey" class="medium"/>
 			</div>
 		</>
 	);
@@ -61,15 +61,15 @@ function SecretCredentials() {
 
 function BucketPoviderSettings() {
 	return (
-		<Show when={source.bucketProvider !== 'azure'} fallback={<AzureSettings/>}>
+		<Show when={bucket.provider !== 'azure'} fallback={<AzureSettings/>}>
 			<div>
 				<label>Endpoint</label>
-				<TextInput store="source" field="bucketEndpoint" class="medium"/>
+				<TextInput store="bucket" field="endpoint" class="medium"/>
 			</div>
 
 			<div>
 				<label>Region</label>
-				<TextInput store="source" field="bucketRegion" class="medium"/>
+				<TextInput store="bucket" field="region" class="medium"/>
 			</div>
 
 			<Checkbox store="source" field="createSecret" style="margin-bottom: 1rem">Create new <code>Secret</code> with credential</Checkbox>
@@ -95,24 +95,18 @@ function BucketConnection() {
 				<label>Bucket Provider</label>
 				<div class="flex-row">
 					<ListSelect
-						store="source" field="bucketProvider"
+						store="bucket" field="provider"
 						changed={providerChanged}
 						items={() => ['generic', 'aws', 'azure', 'gcp']}/>
 				</div>
 			</div>
-			{/* endpoint: storage.googleapis.com */}
-			{/* endpoint: https://<account-name>.blob.core.windows.net */}
 
 			<div>
 				<label>Provider Bucket Name</label>
-				<TextInput store="source" field="bucketName"/>
+				<TextInput store="bucket" field="bucketName"/>
 			</div>
 
-
 			<BucketPoviderSettings/>
-
-
-
 		</div>
 	);
 }

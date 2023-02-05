@@ -1,7 +1,11 @@
-import { getStore, setSource, setStore, storeAccessors } from 'lib/model';
+import { gitRepository, source, storeAccessors } from 'lib/model';
 import { createEffect, onMount } from 'solid-js';
 
-function TextInput(props: any) {
+import { ReactiveInputProps } from 'lib/types';
+
+
+
+function TextInput(props: ReactiveInputProps) {
 	let inputElement: HTMLInputElement;
 
 	const {get, set} = storeAccessors(props);

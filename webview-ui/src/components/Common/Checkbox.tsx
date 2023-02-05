@@ -1,8 +1,9 @@
 import { createEffect, onMount } from 'solid-js';
 import { Checkbox as FastCheckbox} from '@microsoft/fast-foundation';
 import { storeAccessors } from 'lib/model';
+import { ReactiveInputProps } from 'lib/types';
 
-function Checkbox(props: any) {
+function Checkbox(props: ReactiveInputProps) {
 	let checkboxElement: FastCheckbox;
 
 	const {get, set} = storeAccessors(props);

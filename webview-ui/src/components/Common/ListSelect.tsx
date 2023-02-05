@@ -1,7 +1,8 @@
 import { storeAccessors } from 'lib/model';
+import { ReactiveInputProps } from 'lib/types';
 import { For, onMount } from 'solid-js';
 
-function ListSelect(props: any) {
+function ListSelect(props: ReactiveInputProps) {
 	// use <select> instead of <vscode-dropdown> because of <vscode-dropdown> initial value bugs
 	let selectElement: HTMLSelectElement;
 

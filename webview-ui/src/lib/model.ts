@@ -1,13 +1,12 @@
 import { createEffect, createSignal } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import { params, ParamsDictionary } from './params';
+import { params } from './params';
 
 /* SOURCE */
-
 export const [createSource, setCreateSource] = createSignal(true);
 export const [selectedSource, setSelectedSource] = createSignal('');
 
-export const [getSource, setSource] = createStore({
+export const [source, setSource] = createStore({
 	kind: 'GitRepository',
 
 	name: 'podinfo',
@@ -15,9 +14,12 @@ export const [getSource, setSource] = createStore({
 
 	interval: '1m0s',
 	timeout: '5m0s',
+
+	createSecret: false, // secretRef overrides other command authentication flags.
+	secretRef: '', // this secret contains appropriate credentials for selected source type
 });
 
-export const [getGitRepository, setGitRepository] = createStore({
+export const [gitRepository, setGitRepository] = createStore({
 	url: 'https://github.com/stefanprodan/podinfo',
 	refType: 'branch',
 	ref: 'master',
@@ -25,10 +27,6 @@ export const [getGitRepository, setGitRepository] = createStore({
 	// azure
 	createFluxConfig: true,
 	azureScope: 'cluster',
-
-	// sync
-	createSecret: false, // secretRef overrides other command authentication flags.
-	secretRef: '', // this secret contains appropriate credentials for selected source type
 
 	// used the secretRef is not provided
 	privateKeyFile: '', // for git
@@ -40,12 +38,8 @@ export const [getGitRepository, setGitRepository] = createStore({
 	ignorePaths: '',
 });
 
-export const [getHelmRepository, setHelmRepository] = createStore({
+export const [helmRepository, setHelmRepository] = createStore({
 	url: 'https://stefanprodan.github.io/podinfo',
-
-	// sync
-	createSecret: false, // secretRef overrides other command authentication flags.
-	secretRef: '', // this secret contains appropriate credentials for selected source type
 
 	username: '',
 	password: '',
@@ -57,40 +51,36 @@ export const [getHelmRepository, setHelmRepository] = createStore({
 	passCredentials: false,
 });
 
-export const [getOCIRepository, setOCIRepository] = createStore({
+export const [ociRepository, setOCIRepository] = createStore({
 	url: 'oci://ghcr.io/stefanprodan/manifests/podinfo',
 	ref: 'latest',
 	refType: 'tag',
 	provider: 'generic',
 	ignorePaths: '',
 	insecure: false, // non TLS HTTP for Bucket or OCI
-	// sync
-	createSecret: false, // secretRef overrides other command authentication flags.
-	secretRef: '', // this secret contains appropriate credentials for selected source type
+
 	serviceAccount: '',
 });
 
-export const [getBucket, setBucket] = createStore({
+export const [bucket, setBucket] = createStore({
 	// bucketEndpoint: 'minio.minio.svc.cluster.local:9000',
 	endpoint: '',
-	buckerName: 'podinfo',
+	bucketName: 'podinfo',
 	region: '',
 	provider: 'generic',
 	accessKey: '',
 	secretKey: '',
 	// sync
-	createSecret: false, // secretRef overrides other command authentication flags.
-	secretRef: '', // this secret contains appropriate credentials for selected source type
+
 	insecure: false, // non TLS HTTP for Bucket or OCI
 });
-
 
 
 /* KUSTOMIZATION */
 
 export const [createWorkload, setCreateWorkload] = createSignal(false);
 
-export const [getKustomization, setKustomization] = createStore({
+export const [kustomization, setKustomization] = createStore({
 	name: 'podinfo',
 	namespace: 'flux-system',
 	source: '',  // Ex: GitRepo/podinfo.flux-system
@@ -101,16 +91,21 @@ export const [getKustomization, setKustomization] = createStore({
 	prune: true,
 });
 
-export const [getHelmRelease, setHelmRelease] = createStore({
 
-	// 	--chart string                   Helm chart name or path
-	// 	--chart-interval duration        the interval of which to check for new chart versions
-	// 	--chart-version string           Helm chart version, accepts a semver range (ignored for charts from GitRepository sources)
-	// 	--crds crds                      upgrade CRDs policy, available options are: (Skip, Create, CreateReplace)
-	// 	--create-target-namespace        create the target namespace if it does not exist
-	// 	--depends-on strings             HelmReleases that must be ready before this release can be installed, supported formats '<name>' and '<namespace>/<name>'
-	// -h, --help                           help for helmrelease
-	// 	--kubeconfig-secret-ref string   the name of the Kubernetes Secret that contains a key with the kubeconfig file for connecting to a remote cluster
+/*
+export const [helmRelease, setHelmRelease] = createStore({
+
+	name: 'podinfo',
+	chart: 'podinfo',
+	chartInterval: '1m0s',
+	chartVersion: '>4.0.0', // (ignored for charts from GitRepository sources)
+	crds:  'Create', // Skip, Create, CreateReplace
+	createTargetNamespace: true,
+	dependsOn: '', // supported formats '<name>' and '<namespace>/<name>'
+	kubeconfigSecretRef: '', // the name of the Kubernetes Secret that contains a key with the kubeconfig file for connecting to a remote cluster
+	reconcileStrategy: 'ChartVersion', // reconcile strategy for helm chart created by the helm release(accepted values: Revision and ChartRevision)
+	releaseName: '', // defaults to a composition of '[<target-namespace>-]<HelmRelease-name>'
+
 	// 	--reconcile-strategy string      the reconcile strategy for helm chart created by the helm release(accepted values: Revision and ChartRevision) (default "ChartVersion")
 	// 	--release-name string            name used for the Helm release, defaults to a composition of '[<target-namespace>-]<HelmRelease-name>'
 	// 	--service-account string         the name of the service account to impersonate when reconciling this HelmRelease
@@ -119,29 +114,20 @@ export const [getHelmRelease, setHelmRelease] = createStore({
 	// 	--values strings                 local path to values.yaml files, also accepts comma-separated values
 	// 	--values-from strings            a Kubernetes object reference that contains the values.yaml data key in the format '<kind>/<name>', where kind must be one of: (Secret,ConfigMap)
 
-
 });
-// export function getStore(storeName: string, variable: string) {
-// 	const store = (storeName === 'source') ? source : kustomization;
-// 	return () => store[variable];
-// }
-
-// export function setStore(storeName: string, variable: any) {
-// 	const setter = (storeName === 'source') ? setSource : setKustomization;
-// 	return (val: any) => setter(variable, val);
-// }
+*/
 
 interface StoreMap {
 	[key: string]: any;
 }
 
 const getters: StoreMap = {
-	getSource,
-	getGitRepository,
-	getOCIRepository,
-	getHelmRepository,
-	getKustomization,
-	getHelmRelease,
+	source,
+	gitRepository,
+	ociRepository,
+	helmRepository,
+	kustomization,
+	// getHelmRelease,
 };
 
 const setters: StoreMap = {
@@ -150,7 +136,7 @@ const setters: StoreMap = {
 	setOCIRepository,
 	setHelmRepository,
 	setKustomization,
-	setHelmRelease,
+	// setHelmRelease,
 };
 
 export function storeAccessors(props: any) {
@@ -164,7 +150,7 @@ export function storeAccessors(props: any) {
 		const store = props.store;
 		const field = props.field;
 
-		const getter = getters[`get${store}`];
+		const getter = getters[`${store}`];
 		const setter = getters[`set${store}`];
 
 		get = () => getter[field];
@@ -175,21 +161,19 @@ export function storeAccessors(props: any) {
 }
 
 
-
-// window['g'] = getA;
-// window['source'] = source;
-
-
-// init model when params are updated
-function safeSetSource(name: any, val: any) {
-	if(val) {
-		setSource(name, val);
-	}
-}
 createEffect(() => {
-	safeSetSource('name', params.gitInfo?.name);
-	safeSetSource('gitUrl', params.gitInfo?.url);
-	safeSetSource('gitRef', params.gitInfo?.branch);
+	if( params.gitInfo?.name) {
+		setSource('name',  params.gitInfo.name);
+	}
+
+	if( params.gitInfo?.branch) {
+		setGitRepository('url',  params.gitInfo.url);
+	}
+
+	if( params.gitInfo?.name) {
+		setGitRepository('refType',  'branch');
+		setGitRepository('ref',  params.gitInfo.branch);
+	}
 
 	if(params.selectedSource && params.selectedSource !== '') {
 		setSelectedSource(params.selectedSource);

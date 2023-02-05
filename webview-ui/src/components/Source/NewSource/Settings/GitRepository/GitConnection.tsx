@@ -1,9 +1,8 @@
 import Checkbox from 'components/Common/Checkbox';
 import { ToolkitHelpLink } from 'components/Common/HelpLink';
 import TextInput from 'components/Common/TextInput';
-import { source } from 'lib/model';
+import { gitRepository, source } from 'lib/model';
 import { Show } from 'solid-js';
-
 
 function SecretRefInput() {
 	return (
@@ -15,13 +14,13 @@ function SecretRefInput() {
 	;
 }
 
-const isSSH = () => source.gitUrl.toLowerCase().indexOf('ssh') === 0;
+const isSSH = () => gitRepository.url.toLowerCase().indexOf('ssh') === 0;
 
 function SSHPrivateKeyFile() {
 	return (
 		<div>
 			<label>Path to a passwordless SSH private key file</label>
-			<TextInput store="source" field="privateKeyFile" class="long"/>
+			<TextInput store="gitRepository" field="privateKeyFile" class="long"/>
 		</div>
 	);
 }
@@ -37,15 +36,15 @@ function GitConnection() {
 				<Show when={!isSSH()} fallback={SSHPrivateKeyFile}>
 					<div>
 						<label>HTTPS basic authentication username</label>
-						<TextInput store="source" field="username" class="medium"/>
+						<TextInput store="gitRepository" field="username" class="medium"/>
 					</div>
 					<div>
 						<label>HTTPS basic authentication password</label>
-						<TextInput store="source" field="password" class="medium" type="password"/>
+						<TextInput store="gitRepository" field="password" class="medium" type="password"/>
 					</div>
 					<div>
 						<label>HTTPS TLS Certificate Authority cert file</label>
-						<TextInput store="source" field="caFile" class="long"/>
+						<TextInput store="gitRepository" field="caFile" class="long"/>
 					</div>
 				</Show>
 
