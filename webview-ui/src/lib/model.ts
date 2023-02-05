@@ -1,3 +1,4 @@
+import { treeItemTemplate } from '@microsoft/fast-foundation';
 import { createEffect, createSignal } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { params } from './params';
@@ -18,6 +19,7 @@ export const [source, setSource] = createStore({
 	createSecret: false, // secretRef overrides other command authentication flags.
 	secretRef: '', // this secret contains appropriate credentials for selected source type
 
+
 	// azure
 	createFluxConfig: true,
 	azureScope: 'cluster',
@@ -36,6 +38,7 @@ export const [gitRepository, setGitRepository] = createStore({
 
 	recurseSubmodules: false,
 	ignorePaths: '',
+	silent: true, // assumes the deploy key is already setup, skips confirmation
 });
 
 export const [helmRepository, setHelmRepository] = createStore({

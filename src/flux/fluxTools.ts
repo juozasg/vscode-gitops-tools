@@ -248,18 +248,24 @@ class FluxTools {
 
 	createSourceCommand(source: any): string {
 		const commandKind = cliKind(source.kind);
+		const name = source.name;
+
 		delete source.kind;
+		delete source.name;
 
 		const args = buildCLIArgs(source);
 
-		return `flux create source ${commandKind} ${args} --silent`;
+		return `flux create source ${commandKind} ${name} ${args}`;
 	}
 
 
 	createKustomizationCommand(kustomization: any): string {
 		const args = buildCLIArgs(kustomization);
+		const name = kustomization.name;
 
-		return `flux create kustomization ${args} --silent`;
+		delete kustomization.name;
+
+		return `flux create kustomization ${name} ${args}`;
 	}
 
 	async createSource(source: any) {

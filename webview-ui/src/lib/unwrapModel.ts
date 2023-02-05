@@ -33,6 +33,7 @@ function unwrapSource() {
 	if(s['refType']) {
 		// s['tag'] = 'latest';
 		s[s['refType']] = s['ref'];
+		delete s['refType'];
 	}
 
 
