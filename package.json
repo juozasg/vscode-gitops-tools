@@ -563,6 +563,8 @@
 		"tinytim": "^0.1.1",
 		"vscode-kubernetes-tools-api": "^1.3.0"
 	},
+	"activationEvents": [
+	],
 	"__metadata": {
 		"id": "61a914ed-c714-4c42-a201-6008038286a4",
 		"publisherDisplayName": "Weaveworks",
