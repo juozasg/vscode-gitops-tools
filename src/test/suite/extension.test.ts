@@ -17,7 +17,7 @@ let api: {
 
 let currentContext: string;
 
-async function getTreeItem(treeDataProvider: DataProvider, label: string): Promise<vscode.TreeItem | undefined> {
+async function getTreeItem(treeDataProvider: WorkloadDataProvider | SourceDataProvider | ClusterDataProvider, label: string): Promise<vscode.TreeItem | undefined> {
 	const childItems = await treeDataProvider.getChildren();
 	return childItems.find(i => i.label === label);
 }
