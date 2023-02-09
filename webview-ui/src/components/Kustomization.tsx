@@ -1,14 +1,15 @@
 import { Show } from 'solid-js';
 
-import { createWorkload, createSource, setCreateWorkload, source, gitRepository, kustomization } from 'lib/model';
-import { params } from 'lib/params';
-import ListSelect from 'components/Common/ListSelect';
 import Checkbox from 'components/Common/Checkbox';
-import TextInput from './Common/TextInput';
+import ListSelect from 'components/Common/ListSelect';
 import { ToolkitHelpLink } from './Common/HelpLink';
+import TextInput from './Common/TextInput';
+
+import { createSource, createWorkload, kustomization, setCreateWorkload, source } from 'lib/model';
+import { params } from 'lib/params';
 
 function Kustomization() {
-	const isAzure = () => params.clusterInfo?.isAzure && (!createSource() || (source.kind === 'GitRepository' && gitRepository.createFluxConfig));
+	const isAzure = () => params.clusterInfo?.isAzure && (!createSource() || (source.kind === 'GitRepository' && source.createFluxConfig));
 
 	const targetNamespaces = () => [...(params.namespaces?.values() || []), '<unset>'];
 

@@ -1,7 +1,7 @@
 import { Disposable, Uri, ViewColumn, Webview, WebviewPanel, window } from 'vscode';
 import { asAbsolutePath } from '../../extensionContext';
 import { GitInfo } from '../../git/getOpenedFolderGitInfo';
-import { ClusterInfo } from '../../kubernetes/types/kubernetesTypes';
+import { ClusterInfo, KubernetesObject } from '../../kubernetes/types/kubernetesTypes';
 import { getUri } from '../../utils/getUri';
 import { actionCreate, actionYAML } from './actions';
 
@@ -9,7 +9,7 @@ type WebviewParameters = {
 	clusterInfo: ClusterInfo;
 	gitInfo: GitInfo | undefined;
 	namespaces: string[];
-	sources: string[];
+	sources: KubernetesObject[];
 	selectSourceTab: boolean;
 	selectedSource: string;
 };

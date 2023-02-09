@@ -13,7 +13,7 @@ import { postModel } from 'App';
 const repositoryAction = () => createSource() ? 'Create new' : 'Use existing';
 const noActionPossible = () => !createWorkload() && !createSource();
 
-
+const kustomizationPossible = () => source.kind !== 'HelmRepository';
 
 function Main() {
 	const debugBanner = vscode.vsCodeApi ? '' : '| DEBUG';
@@ -25,8 +25,10 @@ function Main() {
 			<vscode-divider></vscode-divider>
 			<Source/>
 			<vscode-divider></vscode-divider>
-			<Kustomization/>
-			<vscode-divider></vscode-divider>
+			<Show when={kustomizationPossible()}>
+				<Kustomization/>
+				<vscode-divider></vscode-divider>
+			</Show>
 			<div class="actions">
 				<h2 style="margin-bottom: 2rem">Actions</h2>
 				<Show when={!noActionPossible()}>

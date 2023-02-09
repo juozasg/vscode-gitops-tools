@@ -34,6 +34,7 @@ function unwrapSource() {
 		// s['tag'] = 'latest';
 		s[s['refType']] = s['ref'];
 		delete s['refType'];
+		delete s['ref'];
 	}
 
 

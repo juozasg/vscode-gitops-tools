@@ -24,15 +24,16 @@ export function debugStandalone() {
 			'branch': 'master',
 		},
 		'namespaces': [ 'default', 'flux-system', 'foobar'],
-		// 'sources': ['podinfo', 'podinfo2', 'podinfo11'],
+		'source': [],
 		'sources': [
-			{'name': 'podinfo', 'kind': 'GitRepository', 'namespace': 'default'},
-			{'name': 'podinfo', 'kind': 'OCIRepository', 'namespace': 'default'},
-			{'name': 'podinfo', 'kind': 'OCIRepository', 'namespace': 'flux-system'},
-			{'name': 'podinfo2', 'kind': 'GitRepository', 'namespace': 'default'},
-			{'name': 'podinfo11', 'kind': 'OCIRepository', 'namespace': 'default'}],
-		'selectSourceTab': false,
-		'selectedSource': 'GitRepository/default.podinfo2',
+			{'kind': 'GitRepository', metadata: {'name': 'podinfo',  'namespace': 'default'}},
+			{'kind': 'OCIRepository', metadata: {'name': 'podinfo',  'namespace': 'default'}},
+			{'kind': 'OCIRepository', metadata: {'name': 'podinfo',  'namespace': 'flux-system'}},
+			{'kind': 'GitRepository', metadata: {'name': 'podinfo2', 'namespace': 'default'}},
+			{'kind': 'OCIRepository', metadata: {'name': 'podinfo11',  'namespace': 'default'}}],
+		'selectSourceTab': true,
+		'selectedSource': 'GitRepository/podinfo2.default',
+		// 'selectedSource': '',
 	};
 
 	setTimeout(() => {

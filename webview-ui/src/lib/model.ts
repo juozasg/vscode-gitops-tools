@@ -2,7 +2,7 @@ import { treeItemTemplate } from '@microsoft/fast-foundation';
 import { createEffect, createSignal } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { params } from './params';
-import { capitalize } from './utils/helpers';
+import { capitalize, namespacedSource } from './utils/helpers';
 
 /* SOURCE */
 export const [createSource, setCreateSource] = createSignal(true);
@@ -21,7 +21,7 @@ export const [source, setSource] = createStore({
 
 
 	// azure
-	createFluxConfig: true,
+	createFluxConfig: false,
 	azureScope: 'cluster',
 });
 
@@ -95,30 +95,29 @@ export const [kustomization, setKustomization] = createStore({
 	prune: true,
 });
 
-
-
-// export const [helmRelease, setHelmRelease] = createStore({
-// 	name: 'podinfo',
-// 	chart: 'podinfo',
-// 	chartInterval: '1m0s',
-// 	chartVersion: '>4.0.0', // (ignored for charts from GitRepository sources)
-// 	crds:  'Create', // Skip, Create, CreateReplace
-// 	createTargetNamespace: true,
-// 	dependsOn: '', // supported formats '<name>' and '<namespace>/<name>'
-// 	kubeconfigSecretRef: '', // the name of the Kubernetes Secret that contains a key with the kubeconfig file for connecting to a remote cluster
-// 	reconcileStrategy: 'ChartVersion', // reconcile strategy for helm chart created by the helm release(accepted values: Revision and ChartRevision)
-// 	releaseName: '', // defaults to a composition of '[<target-namespace>-]<HelmRelease-name>'
-// 	serviceAccount: '',
-// 	source: '', // TODO: refactor into workload store
-// 	targetNamespace: '',
-// 	values: '',
-// 	valuesFrom: '',
-// });
+/*
+ * TODO: add support for HelmRelease
+export const [helmRelease, setHelmRelease] = createStore({
+	name: 'podinfo',
+	chart: 'podinfo',
+	chartInterval: '1m0s',
+	chartVersion: '>4.0.0', // (ignored for charts from GitRepository sources)
+	crds:  'Create', // Skip, Create, CreateReplace
+	createTargetNamespace: true,
+	dependsOn: '', // supported formats '<name>' and '<namespace>/<name>'
+	kubeconfigSecretRef: '', // the name of the Kubernetes Secret that contains a key with the kubeconfig file for connecting to a remote cluster
+	reconcileStrategy: 'ChartVersion', // reconcile strategy for helm chart created by the helm release(accepted values: Revision and ChartRevision)
+	releaseName: '', // defaults to a composition of '[<target-namespace>-]<HelmRelease-name>'
+	serviceAccount: '',
+	source: '', // TODO: refactor into workload store
+	targetNamespace: '',
+	values: '',
+	valuesFrom: '',
+});
+ */
 
 
 // EFFECTS
-
-
 createEffect(() => {
 	if(params.gitInfo?.name) {
 		setSource('name', params.gitInfo.name);
@@ -133,8 +132,14 @@ createEffect(() => {
 		setGitRepository('ref', params.gitInfo.branch);
 	}
 
-	if(params.selectedSource && params.selectedSource !== '') {
-		setKustomization('source', params.selectedSource);
+	if(params.selectSourceTab) {
+		setCreateWorkload(true);
+
+		if(params.selectedSource && params.selectedSource !== '') {
+			setKustomization('source', params.selectedSource);
+		} else if(params.sources?.length > 0) {
+			setKustomization('source', namespacedSource(params.sources[0]));
+		}
 	}
 });
 
@@ -146,6 +151,14 @@ createEffect(() => {
 		setKustomization('source', `${s.kind}/${s.name}.${s.namespace}`);
 	}
 });
+
+createEffect(() => {
+	// no have Kustomization for HR
+	if(source.kind === 'HelmRepository') {
+		setCreateWorkload(false);
+	}
+});
+
 
 
 // GETTERS AND SETTERS

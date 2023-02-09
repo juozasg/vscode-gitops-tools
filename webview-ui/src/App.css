@@ -100,7 +100,7 @@ input:not([type="checkbox"]) {
   width: 16rem !important;
 }
 
-input.long {
+input.long, select.long {
   min-width: 32rem;
 }
 
