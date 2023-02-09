@@ -41,38 +41,6 @@
 	},
 	"bugs": "https://github.com/weaveworks/vscode-gitops-tools/issues",
 	"homepage": "https://github.com/weaveworks/vscode-gitops-tools",
-	"activationEvents": [
-		"onCommand:gitops.dev.showGlobalState",
-		"onCommand:gitops.showInstalledVersions",
-		"onCommand:gitops.suspend",
-		"onCommand:gitops.resume",
-		"onCommand:gitops.createKustomization",
-		"onCommand:gitops.setClusterProvider",
-		"onCommand:gitops.flux.check",
-		"onCommand:gitops.flux.checkPrerequisites",
-		"onCommand:gitops.flux.install",
-		"onCommand:gitops.flux.uninstall",
-		"onCommand:gitops.flux.reconcileSource",
-		"onCommand:gitops.flux.reconcileRepository",
-		"onCommand:gitops.flux.reconcileWorkload",
-		"onCommand:gitops.flux.trace",
-		"onCommand:gitops.views.refreshAllTreeViews",
-		"onCommand:gitops.views.refreshResourcesTreeView",
-		"onCommand:gitops.views.pullGitRepository",
-		"onCommand:gitops.views.createGitRepository",
-		"onCommand:gitops.views.deleteSource",
-		"onCommand:gitops.views.deleteWorkload",
-		"onCommand:gitops.views.showWorkloadsHelpMessage",
-		"onCommand:gitops.copyResourceName",
-		"onCommand:gitops.editor.openResource",
-		"onCommand:gitops.editor.showLogs",
-		"onCommand:gitops.output.show",
-		"onCommand:gitops.installFluxCli",
-		"onView:gitops.views.clusters",
-		"onView:gitops.views.sources",
-		"onView:gitops.views.workloads",
-		"onView:gitops.views.documentation"
-	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
@@ -427,7 +395,7 @@
 				},
 				{
 					"command": "gitops.addKustomization",
-					"when": "view == gitops.views.sources && viewItem =~ /GitRepository;|OCIRepository;/",
+					"when": "view == gitops.views.sources && viewItem =~ /GitRepository;|OCIRepository;|Bucket;/",
 					"group": "navigation@3"
 				},
 				{
