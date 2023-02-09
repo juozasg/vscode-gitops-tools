@@ -1,4 +1,3 @@
-import { treeItemTemplate } from '@microsoft/fast-foundation';
 import { createEffect, createSignal } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { params } from './params';
@@ -14,11 +13,9 @@ export const [source, setSource] = createStore({
 	namespace: 'flux-system',
 
 	interval: '1m0s',
-	timeout: '5m0s',
 
 	createSecret: false, // secretRef overrides other command authentication flags.
 	secretRef: '', // this secret contains appropriate credentials for selected source type
-
 
 	// azure
 	createFluxConfig: false,

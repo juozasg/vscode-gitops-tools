@@ -93,7 +93,7 @@ function BucketConnection() {
 		<div>
 
 			<div>
-				<label>Bucket Provider</label>
+				<label>Bucket Provider</label><ToolkitHelpLink href="source/buckets/#provider"/>
 				<div class="flex-row">
 					<ListSelect
 						store="bucket" field="provider"

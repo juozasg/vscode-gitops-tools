@@ -260,10 +260,10 @@ class FluxTools {
 
 
 	createKustomizationCommand(kustomization: any): string {
-		const args = buildCLIArgs(kustomization);
 		const name = kustomization.name;
-
 		delete kustomization.name;
+
+		const args = buildCLIArgs(kustomization);
 
 		return `flux create kustomization ${name} ${args}`;
 	}
@@ -287,7 +287,7 @@ class FluxTools {
 
 		const shellResult = await shell.execWithOutput(command);
 
-		if (shellResult.code !== 0) {
+		if(shellResult.code !== 0) {
 			window.showErrorMessage(shellResult.stderr);
 			telemetry.sendError(TelemetryErrorEventNames.FAILED_TO_RUN_FLUX_CREATE_SOURCE);
 
@@ -311,10 +311,14 @@ class FluxTools {
 		const command = `${this.createKustomizationCommand(kustomization)} --export`;
 		const shellResult = await shell.execWithOutput(command);
 
-		if (shellResult.code !== 0) {
+		if(shellResult.code !== 0) {
 			window.showErrorMessage(shellResult.stderr);
 			telemetry.sendError(TelemetryErrorEventNames.FAILED_TO_RUN_FLUX_CREATE_KUSTOMIZATION);
+
+			return '---';
 		}
+
+		return shellResult.stdout;
 	}
 
 }

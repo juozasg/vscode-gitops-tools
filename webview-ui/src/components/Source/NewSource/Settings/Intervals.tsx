@@ -8,13 +8,6 @@ function SettingsIntervals() {
 				<label>Repository sync interval</label>
 				<div class="flex-row">
 					<TextInput store="source" field="interval" class="short-number"/>
-
-				</div>
-			</div>
-			<div>
-				<label>Repository sync timeout</label>
-				<div class="flex-row">
-					<TextInput store="source" field="timeout" class="short-number"/>
 				</div>
 			</div>
 		</div>

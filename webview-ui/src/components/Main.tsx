@@ -35,7 +35,7 @@ function Main() {
 					<p>{repositoryAction()} <code>{kustomization.source}</code></p>
 				</Show>
 				<Show when={createWorkload()}>
-					<p>Create new <code>Kustomization</code> '{kustomization.name}' for <code>{kustomization.source}</code></p>
+					<p>Create new <code>Kustomization/{kustomization.name}.{kustomization.namespace}</code> for <code>{kustomization.source}</code></p>
 				</Show>
 
 				<Show when={noActionPossible()}>
@@ -112,7 +112,7 @@ function missingFields() {
 			if(!(bucket.endpoint?.length > 0)) {
 				fields.push('Bucket endpoint');
 			}
-			if(!bucket.insecure) {
+			if(bucket.provider === 'generic') {
 				if(source.secretRef.length === 0 && (bucket.accessKey.length === 0 || bucket.secretKey.length === 0)) {
 					fields.push('Bucket Secret Ref or Access and Secret keys');
 				}

@@ -31,7 +31,7 @@ export function debugStandalone() {
 			{'kind': 'OCIRepository', metadata: {'name': 'podinfo',  'namespace': 'flux-system'}},
 			{'kind': 'GitRepository', metadata: {'name': 'podinfo2', 'namespace': 'default'}},
 			{'kind': 'OCIRepository', metadata: {'name': 'podinfo11',  'namespace': 'default'}}],
-		'selectSourceTab': true,
+		'selectSourceTab': false,
 		'selectedSource': 'GitRepository/podinfo2.default',
 		// 'selectedSource': '',
 	};
