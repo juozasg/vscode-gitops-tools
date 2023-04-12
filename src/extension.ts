@@ -11,6 +11,7 @@ import { statusBar } from './statusBar';
 import { Telemetry, TelemetryEventNames } from './telemetry';
 import { createTreeViews, clusterTreeViewProvider, sourceTreeViewProvider, workloadTreeViewProvider } from './views/treeViews';
 import { shell } from './shell';
+import { clientTest } from './kubernetes/clientTest';
 
 /** Disable interactive modal dialogs, useful for testing */
 export let disableConfirmations = false;
@@ -38,52 +39,53 @@ export async function activate(context: ExtensionContext) {
 	globalState = new GlobalState(context);
 
 	telemetry = new Telemetry(context, getExtensionVersion(), GitOpsExtensionConstants.ExtensionId);
+	clientTest();
 
-	// create gitops tree views
-	createTreeViews();
+	// // create gitops tree views
+	// createTreeViews();
 
-	// register gitops commands
-	registerCommands(context);
+	// // register gitops commands
+	// registerCommands(context);
 
-	telemetry.send(TelemetryEventNames.Startup);
+	// telemetry.send(TelemetryEventNames.Startup);
 
-	if (globalState.get(GlobalStateKey.FirstEverActivationStorageKey) === undefined) {
-		telemetry.send(TelemetryEventNames.NewInstall);
-		showNewUserGuide();
-		globalState.set(GlobalStateKey.FirstEverActivationStorageKey, false);
-	}
+	// if (globalState.get(GlobalStateKey.FirstEverActivationStorageKey) === undefined) {
+	// 	telemetry.send(TelemetryEventNames.NewInstall);
+	// 	showNewUserGuide();
+	// 	globalState.set(GlobalStateKey.FirstEverActivationStorageKey, false);
+	// }
 
-	// set vscode context: developing extension. test is also dev
-	setVSCodeContext(ContextTypes.IsDev, context.extensionMode === ExtensionMode.Development || context.extensionMode === ExtensionMode.Test );
-	if(context.extensionMode === ExtensionMode.Test) {
-		disableConfirmations = true;
-	}
-
-
-	const version = context.extension.packageJSON.version;
-	if(context.extensionMode === ExtensionMode.Development || version.indexOf('-') !== -1) {
-		experimentalFlag = true;
-	}
+	// // set vscode context: developing extension. test is also dev
+	// setVSCodeContext(ContextTypes.IsDev, context.extensionMode === ExtensionMode.Development || context.extensionMode === ExtensionMode.Test );
+	// if(context.extensionMode === ExtensionMode.Test) {
+	// 	disableConfirmations = true;
+	// }
 
 
-	// show error notification if flux is not installed
-	const fluxFoundResult = await promptToInstallFlux();
-	if (succeeded(fluxFoundResult)) {
-		// check flux prerequisites
-		await checkFluxPrerequisites();
-	}
+	// const version = context.extension.packageJSON.version;
+	// if(context.extensionMode === ExtensionMode.Development || version.indexOf('-') !== -1) {
+	// 	experimentalFlag = true;
+	// }
 
-	checkWGEVersion();
 
-	let api = {
-		shell: shell,
-		data: {
-			clusterTreeViewProvider: clusterTreeViewProvider,
-			sourceTreeViewProvider: sourceTreeViewProvider,
-			workloadTreeViewProvider: workloadTreeViewProvider,
-		}};
+	// // show error notification if flux is not installed
+	// const fluxFoundResult = await promptToInstallFlux();
+	// if (succeeded(fluxFoundResult)) {
+	// 	// check flux prerequisites
+	// 	await checkFluxPrerequisites();
+	// }
 
-	return api;
+	// checkWGEVersion();
+
+	// let api = {
+	// 	shell: shell,
+	// 	data: {
+	// 		clusterTreeViewProvider: clusterTreeViewProvider,
+	// 		sourceTreeViewProvider: sourceTreeViewProvider,
+	// 		workloadTreeViewProvider: workloadTreeViewProvider,
+	// 	}};
+
+	// return api;
 }
 
 function listenConfigChanged() {
