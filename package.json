@@ -271,7 +271,7 @@
 				},
 				"gitops.kubectlTimeout": {
 					"type": "string",
-					"default": "3s",
+					"default": "10s",
 					"description": "kubectl --request-timeout"
 				}
 			}
@@ -614,8 +614,7 @@
 		"vscode-uri": "^3.0.7"
 	},
 	"activationEvents": [
-		"onDebug",
-		"*"
+		"onDebug"
 	],
 	"__metadata": {
 		"id": "61a914ed-c714-4c42-a201-6008038286a4",
