@@ -8,4 +8,4 @@ This project does not backport fixes to older versions, so please ensure you are
 
 ## Reporting a Vulnerability
 
-To submit a security bug report please e-mail us at security@weave.works.
+To submit a security bug report please e-mail us at security@weave.works
